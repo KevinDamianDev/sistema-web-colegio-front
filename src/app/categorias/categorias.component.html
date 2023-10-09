@@ -1,0 +1,42 @@
+<div class="card  border-primary  mb-3">
+    <div class="card-header">CATEGORIAS</div>
+    <div class="card-body text-success" >
+
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/categorias/form']" class="btn btn-rounded btn-primary" >Crear Categoria</button>
+      </div>
+      <div class="table-responsive">
+        <div *ngIf="categorias?.length==0" class="alert alert-info">
+          No hay registros en la base de datos!
+        </div>
+      <table class="table" *ngIf="categorias?.length>0" >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRE CATEGORIA</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let categoria of categorias" >
+            <td>{{categoria.idCategoria}}</td>
+              <td>{{categoria.nombreCategoria}}</td>
+              <td>
+                <button type="button" name="editar" [routerLink]="['/categorias/form',categoria.idCategoria]"
+                class="btn btn-primary" >Editar</button>
+              </td>
+              <td>
+                <button type="button" name="eliminar" (click)="delete(categoria)"
+                class="btn btn-danger" >Eliminar</button>
+              </td>
+          </tr>
+        </tbody>
+    
+      </table>
+      </div>
+
+    </div>
+</div>      
+
+

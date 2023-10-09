@@ -1,0 +1,39 @@
+
+  
+  <div class="card bg-secondary  text-white"  >
+    <div class="card-header"> {{titulo}} </div>
+      <div class="card-body">
+  
+  <form #form="ngForm">
+  
+    <div class="form-group row">
+      <label for="nombreEquipo" class="col-form-label col-sm-2" >Nombre equipo:</label>
+        <div class="col-sm-6">
+            <input type="text"class="form-control" [(ngModel)]="equipo.nombreEquipo" name="nombreEquipo" required minlength="3" #nombre="ngModel">
+            <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" >
+              <div *ngIf="nombre.errors.required">
+                  Nombre equipo es requerido.
+              </div>
+              <div *ngIf="nombre.errors.minlength">
+                  Nombre equipo debe tener al menos 3 caracteres.
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <button role="button" [disabled]="!form.form.valid"  class="btn btn-primary mr-3"  name="button" (click)="create()" *ngIf="!equipo.idEquipo else elseBlock" >Crear</button>  
+      <ng-template #elseBlock>
+        <button role="button"[disabled]="!form.form.valid"   class="btn btn-primary mr-3"  name="button" (click)="update()"  >Actualizar</button>  
+      </ng-template>
+      <button role="button" [routerLink]="['/equipos']"  class="btn btn-danger"  name="button"  >Cancelar</button>  
+      </div>
+    </div>
+  
+  </form>
+  
+      </div>
+  </div>
+  
+
+

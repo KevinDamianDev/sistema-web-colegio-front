@@ -1,0 +1,53 @@
+<div class="card  border-primary  mb-3">
+    <div class="card-header">CLIENTES</div>
+    <div class="card-body text-success" >
+
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/personas/form']" class="btn btn-rounded btn-primary" >Crear Personas</button>
+      </div>
+      <div class="table-responsive">
+        <div *ngIf="personas?.length==0" class="alert alert-info">
+          No hay registros en la base de datos!
+        </div>
+      <table class="table" *ngIf="personas?.length>0" >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRES</th>
+            <th>APELLIDOS</th>
+            <th>EMAIL</th>
+            <th>DNI</th>
+            <th>FECHA NAC.</th>
+            <th>ESTADO</th>
+            <th>USUARIO</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let persona of personas" >
+            <td>{{persona.idPersona}}</td>
+              <td>{{persona.nombrePersona}}</td>
+              <td>{{persona.apellidosPersonas }} </td>
+              <td>{{persona.correoPersona}}</td>
+              <td>{{persona.dniPersona }} </td>
+              <td>{{persona.fechaNacPersona | date:"EEEE dd, MMM yyyy" }}</td>
+              <td>{{persona.estadoPersona }} </td>
+              <td>{{persona.usuarioPersona}}</td>
+              <td>
+                <button type="button" name="editar" [routerLink]="['/personas/form',persona.idPersona]"
+                class="btn btn-primary" >Editar</button>
+              </td>
+              <td>
+                <button type="button" name="eliminar" (click)="delete(persona)"
+                class="btn btn-danger" >Eliminar</button>
+              </td>
+          </tr>
+        </tbody>
+    
+      </table>
+      </div>
+
+    </div>
+</div>      
+

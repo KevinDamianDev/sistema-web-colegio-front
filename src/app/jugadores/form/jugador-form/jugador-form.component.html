@@ -1,0 +1,74 @@
+
+  
+  <div class="card bg-secondary  text-white"  >
+    <div class="card-header"> {{titulo}} </div>
+      <div class="card-body">
+  
+  <form #form="ngForm">
+  
+    <div class="form-group row">
+      <label for="nombreJugador" class="col-form-label col-sm-2" >Nombres completos:</label>
+        <div class="col-sm-6">
+            <input type="text"class="form-control" [(ngModel)]="jugador.nombreJugador" name="nombreJugador" required minlength="10" #nombre="ngModel">
+            <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" >
+              <div *ngIf="nombre.errors.required">
+                  Nombres es requerido.
+              </div>
+              <div *ngIf="nombre.errors.minlength">
+                  Nombres  debe tener al menos 10 caracteres.
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="dni" class="col-form-label col-sm-2" >Dni:</label>
+        <div class="col-sm-6">
+          <input type="number"class="form-control" [(ngModel)]="jugador.dni" name="dni" required #dni="ngModel">
+          <div class="alert alert-danger" *ngIf="dni.invalid && (dni.dirty || dni.touched)" >
+            <div *ngIf="dni.errors.required">
+                DNI es requerido.
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="fechaNJugador" class="col-form-label col-sm-2" >Fecha N.</label>
+        <div class="col-sm-6">
+          <input type="date"class="form-control" [(ngModel)]="jugador.fechaNJugador" name="fechaNJugador" required #fecha="ngModel">
+          <div class="alert alert-danger" *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" >
+            <div *ngIf="fecha.errors.required">
+                Fecha de nacimiento es requerido.
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="dorsalJugador" class="col-form-label col-sm-2" >Dorsal:</label>
+        <div class="col-sm-6">
+          <input type="number"class="form-control" [(ngModel)]="jugador.dorsalJugador" name="dorsalJugador" required #dorsalJugador="ngModel">
+          <div class="alert alert-danger" *ngIf="dorsalJugador.invalid && (dorsalJugador.dirty || dorsalJugador.touched)" >
+            <div *ngIf="dorsalJugador.errors.required">
+                Dorsal es requerido.
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <button role="button" [disabled]="!form.form.valid"  class="btn btn-primary mr-3"  name="button" (click)="create()" *ngIf="!jugador.idJugador else elseBlock" >Crear</button>  
+      <ng-template #elseBlock>
+        <button role="button"[disabled]="!form.form.valid"   class="btn btn-primary mr-3"  name="button" (click)="update()"  >Actualizar</button>  
+      </ng-template>
+      <button role="button" [routerLink]="['/jugadores']"  class="btn btn-danger"  name="button"  >Cancelar</button>  
+      </div>
+    </div>
+  
+  </form>
+  
+      </div>
+  </div>
+  
+
+

@@ -1,0 +1,44 @@
+<div class="card  border-primary  mb-3">
+    <div class="card-header">EVENTOS</div>
+    <div class="card-body text-success" >
+
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/eventos/form']" class="btn btn-rounded btn-primary" >Crear Evento</button>
+      </div>
+      <div class="table-responsive">
+        <div *ngIf="eventos?.length==0" class="alert alert-info">
+          No hay registros en la base de datos!
+        </div>
+      <table class="table" *ngIf="eventos?.length>0" >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRE EVENTO</th>
+            <th>CATEGORIA</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evento of eventos" >
+            <td>{{evento.idEvento}}</td>
+              <td>{{evento.nombreEvento}}</td>
+              <td>{{evento.categoria.nombreCategoria}}</td>
+              <td>
+                <button type="button" name="editar" [routerLink]="['/eventos/form',evento.idEvento]"
+                class="btn btn-primary" >Editar</button>
+              </td>
+              <td>
+                <button type="button" name="eliminar" (click)="delete(evento)"
+                class="btn btn-danger" >Eliminar</button>
+              </td>
+          </tr>
+        </tbody>
+    
+      </table>
+      </div>
+
+    </div>
+</div>      
+
+

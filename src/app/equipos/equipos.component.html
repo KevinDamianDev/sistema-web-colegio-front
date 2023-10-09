@@ -1,0 +1,134 @@
+<app-detalle *ngIf="equipoSeleccionado" [equipo]="equipoSeleccionado" ></app-detalle>
+<!--
+<div class="card  border-primary  mb-3">
+    <div class="card-header">EQUIPOS</div>
+    <div class="card-body text-success" >
+
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/equipos/form']" class="btn btn-rounded btn-primary" >Crear Equipos</button>
+      </div>
+      <div class="table-responsive">
+        <div *ngIf="equipos?.length==0" class="alert alert-info">
+          No hay registros en la base de datos!
+        </div>
+      <table class="table" *ngIf="equipos?.length>0" >
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Nombre equipo</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let equipo of equipos" >
+            <td> <img (click)="abrirModal(equipo)" *ngIf="equipo?.foto" src="http://localhost:8080/equipos/uploads/img/{{equipo.foto}}" alt="{{equipo.foto}}" class="img-thumbnail rounded" 
+              style="width: 80px; cursor: pointer;" >
+              <img (click)="abrirModal(equipo)" *ngIf="!equipo?.foto" src="http://localhost:8080/images/no_equipo.png" alt="Sin foto" class="img-thumbnail rounded" 
+              style="width: 80px; cursor: pointer;" >
+            </td>
+              <td>{{equipo.nombreEquipo}}</td>
+              <td>
+                <button type="button" name="editar" [routerLink]="['/equipos/form',equipo.idEquipo]"
+                class="btn btn-primary" >Editar</button>
+              </td>
+              <td>
+                <button type="button" name="eliminar" (click)="delete(equipo)"
+                class="btn btn-danger" >Eliminar</button>
+              </td>
+          </tr>
+        </tbody>
+    
+      </table>
+      </div>
+
+    </div>
+</div>      
+-->
+
+
+<!--
+<div class="card border-primary mb-3">
+  <div class="card-header">EQUIPOS</div>
+  <div class="card-body text-success">
+
+    <div class="my-2 text-left">
+      <button type="button" [routerLink]="['/equipos/form']" class="btn btn-rounded btn-primary">Crear Equipos</button>
+    </div>
+
+    <div class="row">
+      <div *ngIf="equipos?.length == 0" class="alert alert-info">
+        No hay registros en la base de datos!
+      </div>
+
+      <div class="col-md-4" *ngFor="let equipo of equipos">
+        <div class="card mb-4">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img (click)="abrirModal(equipo)" *ngIf="equipo?.foto" src="http://localhost:8080/equipos/uploads/img/{{equipo.foto}}" alt="{{equipo.foto}}" class="card-img-top img-thumbnail rounded" style="cursor: pointer; width: 150px; height: 150px;">
+              <img (click)="abrirModal(equipo)" *ngIf="!equipo?.foto" src="http://localhost:8080/images/no_equipo.png" alt="Sin foto" class="card-img-top img-thumbnail rounded" style="cursor: pointer; width: 150px; height: 150px;">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body text-center">
+                <div class="col-md-8">
+                  <h4 class="card-title">{{equipo.nombreEquipo}}</h4>              
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="btn-group">
+                  <button type="button" name="editar" [routerLink]="['/equipos/form',equipo.idEquipo]" class="btn btn-primary">Editar</button>
+                </div>
+                <div class="btn-group" style="margin-left: 10px;">
+                  <button type="button" name="eliminar" (click)="delete(equipo)" class="btn btn-danger">Eliminar</button>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+-->
+
+
+
+<div class="card border-primary mb-3">
+  <div class="card-header">EQUIPOS</div>
+  <div class="card-body text-success">
+    <div class="my-2 text-left">
+      <button type="button" [routerLink]="['/equipos/form']" class="btn btn-rounded btn-primary">Crear Equipos</button>
+    </div>
+
+    <div *ngIf="equipos?.length == 0" class="alert alert-info">
+      No hay registros en la base de datos!
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" *ngFor="let equipo of equipos">
+        <div class="card mb-4">
+          <div class="row no-gutters">
+            <div class="col-md-12 d-flex justify-content-center">
+              <img (click)="abrirModal(equipo)" *ngIf="equipo?.foto" src="http://localhost:8080/equipos/uploads/img/{{equipo.foto}}" alt="{{equipo.foto}}" class="card-img-top img-thumbnail rounded" style="cursor: pointer; width: 150px; height: 150px;">
+              <img (click)="abrirModal(equipo)" *ngIf="!equipo?.foto" src="http://localhost:8080/images/no_equipo.png" alt="Sin foto" class="card-img-top img-thumbnail rounded" style="cursor: pointer; width: 150px; height: 150px;">
+            </div>
+            <div class="col-md-12">
+              <div class="card-body text-center">
+                <div class="col-md-12 d-flex justify-content-center my-2"> <!-- Agrega my-2 para el margen vertical -->
+                  <h4 class="card-title">{{equipo.nombreEquipo}}</h4>              
+                </div>
+                <div class="d-flex justify-content-center"> <!-- Aplica clase d-flex y justify-content-center aquí -->
+                  <button type="button" name="editar" [routerLink]="['/equipos/form',equipo.idEquipo]" class="btn btn-primary mx-2">Editar</button> <!-- Agrega mx-2 para el margen horizontal -->
+                  <button type="button" name="eliminar" (click)="delete(equipo)" class="btn btn-danger mx-2">Eliminar</button> <!-- Agrega mx-2 para el margen horizontal -->
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
