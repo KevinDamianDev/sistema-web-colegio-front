@@ -1,0 +1,18 @@
+/* login.component.css */
+.login-container {
+    background-image: url('../../assets/dist/img/fondo2.jpg'); /* Reemplaza 'background.jpg' con tu imagen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-form {
+    background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  

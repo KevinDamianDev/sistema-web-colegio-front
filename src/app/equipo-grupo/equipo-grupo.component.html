@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <hr style="border-top: 2px solid #000000; margin: 10px 0;">
+          <div class="d-flex align-items-center">
+            <i class="fa fa-arrow-left" [routerLink]="['/detalle/eventoFecha',idFase]" style="cursor: pointer;"></i>
+            <h5 style="font-size: 15px; margin-left: 20px;">Detalle del evento</h5>
+          </div>
+          <hr style="border-top: 2px solid #000000; margin: 5px 0;">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-primary" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+              {{nombreGrupo}}
+            </div>
+        </div>
+      </div>
+
+</div>
+
+  <div class="container">
+      <div class="card  border-primary  mb-3">
+        <div class="card-header">Estadisticas por grupo</div>
+        <div class="card-body text-success" >
+
+        <div>
+          <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
+        </div>  
+        <br>    
+          <div>
+            <div class="table-responsive">
+    
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Pos</th>             
+                    <th >Equipo</th>
+                    <th class="text-center">PTS</th>
+                    <th class="text-center">J</th>
+                    <th class="text-center">G</th>
+                    <th class="text-center">E</th>
+                    <th class="text-center">P</th>
+                    <th class="text-center">GF</th>
+                    <th class="text-center">GC</th>
+                    <th class="text-center">DIF</th>
+                    <th class="text-center">P</th>
+                    <th *ngIf="botonesHabilitados" class="text-center">#</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let equipoGrupo of equiposGrupos; let i = index">
+                    <tr>
+                        <td>{{ i + 1 }}</td> 
+                    <td>                   
+                        <img *ngIf="equipoGrupo.equipo?.foto" src="http://localhost:8080/equipos/uploads/img/{{equipoGrupo.equipo.foto}}" alt="{{equipoGrupo.equipo.foto}}" class="card-img-top img-thumbnail rounded" 
+                            style="width: 50px; height: 50px;">
+                        <img *ngIf="!equipoGrupo.equipo?.foto" src="http://localhost:8080/images/no_equipo.png" alt="Sin foto" class="card-img-top img-thumbnail rounded" style="width: 50px; height: 50px;">                   
+                        {{ equipoGrupo.equipo.nombreEquipo }}
+                    </td>           
+                      <td class="text-center">{{ equipoEstadisticas[i]?.puntos }}</td>
+                        <td class="text-center">{{ equipoEstadisticas[i]?.jugados }}</td>
+                        <td class="text-center">{{ equipoEstadisticas[i]?.ganados }}</td>
+                        <td class="text-center">{{ equipoEstadisticas[i]?.empatados }}</td>
+                        <td class="text-center">{{ equipoEstadisticas[i]?.perdidos }}</td>
+                        <td class="text-center">{{ equipoEstadisticas[i]?.golesFavor }}</td>
+                        <td class="text-center">{{ equipoEstadisticas[i]?.golesContra }}</td>
+                        <td class="text-center">{{ equipoEstadisticas[i]?.diferenciaGoles }}</td>
+                        <td class="text-center">{{ equipoEstadisticas[i]?.penales }}</td>
+                        <td *ngIf="botonesHabilitados" class="text-center">
+                          <button  type="button" name="editar" [routerLink]="['/estadisticaEquipo', equipoEstadisticas[i]?.idEquipoEstadistica,{ idGrupo: equipoGrupo.grupo.idGrupo, idFase:idFase }]" class="btn btn-primary mr-2 mb-3">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                        </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>                    
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>

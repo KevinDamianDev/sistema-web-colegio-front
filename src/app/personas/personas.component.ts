@@ -14,10 +14,18 @@ export class PersonasComponent implements OnInit{
 
   constructor(private personaService: PersonaService){}
 
+  public checkboxSeleccionado: boolean = false;
+  public botonesHabilitados: boolean = false;
+  public checkboxSeleccionadoG: boolean = false;
+  public botonesHabilitadosG: boolean = false;
+
   ngOnInit():void {
     this.personaService.getPersonas().subscribe(
-      p => this.personas = p
-     
+      p => {
+        this.personas = p;
+        console.log(' this.personas ::::'+JSON.stringify(this.personas, null, 2));
+      }
+      
     );
   }
 
@@ -53,6 +61,13 @@ export class PersonasComponent implements OnInit{
   
       }
     });
+  }
+  toggleBotones() {
+    this.botonesHabilitados = !this.botonesHabilitados;
+  }
+
+  toggleBotonesGestionar() {
+    this.botonesHabilitadosG = !this.botonesHabilitadosG;
   }
 
 }

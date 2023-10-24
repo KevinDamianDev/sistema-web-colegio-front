@@ -1,5 +1,5 @@
 
-  
+
   <div class="card bg-secondary  text-white"  >
     <div class="card-header"> {{titulo}} </div>
       <div class="card-body">
@@ -35,9 +35,9 @@
     <div class="form-group row">
         <label for="fechaNJugador" class="col-form-label col-sm-2" >Fecha N.</label>
         <div class="col-sm-6">
-          <input type="date"class="form-control" [(ngModel)]="jugador.fechaNJugador" name="fechaNJugador" required #fecha="ngModel">
-          <div class="alert alert-danger" *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" >
-            <div *ngIf="fecha.errors.required">
+          <input type="date"class="form-control" [(ngModel)]="jugador.fechaNJugador" name="fechaNJugador" required #fechaNJugador="ngModel">
+          <div class="alert alert-danger" *ngIf="fechaNJugador.invalid && (fechaNJugador.dirty || fechaNJugador.touched)" >
+            <div *ngIf="fechaNJugador.errors.required">
                 Fecha de nacimiento es requerido.
             </div>
           </div>

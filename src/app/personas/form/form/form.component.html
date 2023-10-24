@@ -68,7 +68,7 @@
           </div>
         </div>
     </div>
-    <div class="form-group row">
+  <!--  <div class="form-group row">
         <label for="estadoPersona" class="col-form-label col-sm-2" >Estado</label>
         <div class="col-sm-6">
           <input type="text"class="form-control" [(ngModel)]="persona.estadoPersona" name="estadoPersona" required #estado="ngModel" >
@@ -79,6 +79,22 @@
           </div>
         </div>
     </div>
+  -->
+  <div class="form-group row">
+    <label for="estadoPersona" class="col-form-label col-sm-2">Estado</label>
+    <div class="col-sm-6">
+      <select class="form-control" [(ngModel)]="persona.estadoPersona" name="estadoPersona" required #estado="ngModel">
+        <option [ngValue]="true">Activo</option>
+        <option [ngValue]="false">Inactivo</option>
+      </select>
+      <div class="alert alert-danger" *ngIf="estado.invalid && (estado.dirty || estado.touched)">
+        <div *ngIf="estado.errors.required">
+          Estado es requerido.
+        </div>
+      </div>
+    </div>
+  </div>
+  
     <div class="form-group row">
         <label for="usuarioPersona" class="col-form-label col-sm-2" >Usuario</label>
         <div class="col-sm-6">

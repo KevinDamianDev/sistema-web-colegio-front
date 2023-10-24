@@ -1,0 +1,121 @@
+<app-detalle *ngIf="equipoSeleccionado" [equipo]="equipoSeleccionado" ></app-detalle>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <hr style="border-top: 2px solid #000000; margin: 10px 0;">
+      <div class="d-flex align-items-center">
+        <i class="fa fa-arrow-left" [routerLink]="['/eventos']" style="cursor: pointer;"></i>
+        <h5 style="font-size: 15px; margin-left: 20px;">Detalle del evento</h5>
+      </div>
+      <hr style="border-top: 2px solid #000000; margin: 5px 0;">
+    </div>
+  </div>
+  
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-primary" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+        {{evento.nombreEvento}}
+      </div>
+
+      <h5>Fases del evento:</h5>
+      <div class="row">
+        <div class="my-2 text-left">
+          <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
+        </div>
+        <div class="col-md-4">
+          <div class="my-2 text-left" *ngIf="botonesHabilitados">
+            <button type="button" [routerLink]="['/fases/form',{ idEvento: evento.idEvento }]" 
+            class="btn btn-rounded btn-primary">Crear Fase</button>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="!errores" >
+
+        </div>
+      </div>
+      <br>
+      <div class="row" *ngIf="!errores">
+        <div class="col-md-4" *ngFor="let fase of fases">
+          <div class="card mb-3">
+            <div class="card-body d-flex justify-content-center" >
+              <h5 class="card-title"></h5>
+              <a [routerLink]="['/detalle/eventoFecha', fase.idFase]"> {{fase.nombreFase}}</a>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button *ngIf="botonesHabilitados" type="button" name="editar" [routerLink]="['/fases/form', fase.idFase,{ idEvento: evento.idEvento }]" class="btn btn-primary mr-2 mb-3">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button *ngIf="botonesHabilitados" type="button" name="eliminarFase" (click)="delete(fase)" class="btn btn-danger mb-3">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="errores">
+        <div class="alert alert-info">
+            No hay fases para el evento.
+          </div>
+      </div>
+
+
+      <h5>Equipos del evento:</h5>
+      <div class="row">
+        <div class="my-2 text-left">
+          <input type="checkbox" [(ngModel)]="checkboxSeleccionadoEquipo" (change)="toggleBotonesEquipo()"> Opciones
+        </div>
+        <div class="col-md-4">
+          <div class="my-2 text-left" *ngIf="botonesHabilitadosEquipo">
+            <button type="button" [routerLink]="['/equipos/form',{ idEvento: evento.idEvento }]" 
+            class="btn btn-rounded btn-primary">Crear Equipo</button>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="!erroresEquipo" >
+
+        </div>
+      </div>
+      <br>
+
+      <div class="row" *ngIf="!erroresEquipo" >
+        <div class="col-md-3" *ngFor="let equipo of equipos">
+          <div class="card mb-4">
+            <div class="row no-gutters">
+              <div class="col-md-12 d-flex justify-content-center">
+                <img (click)="abrirModal(equipo)" *ngIf="equipo?.foto" src="http://localhost:8080/equipos/uploads/img/{{equipo.foto}}" alt="{{equipo.foto}}" class="card-img-top img-thumbnail rounded" style="cursor: pointer; width: 150px; height: 150px;">
+                <img (click)="abrirModal(equipo)" *ngIf="!equipo?.foto" src="http://localhost:8080/images/no_equipo.png" alt="Sin foto" class="card-img-top img-thumbnail rounded" style="cursor: pointer; width: 150px; height: 150px;">
+              </div>
+              <div class="col-md-12">
+                <div class="card-body text-center">
+                  <div class="col-md-12 d-flex justify-content-center my-2">  
+                    <a [routerLink]="['/jugadores', equipo.idEquipo,  { idEvento: evento.idEvento }]"> {{equipo.nombreEquipo}}</a>          
+                  </div>
+                  
+                  <div class="d-flex justify-content-center"> 
+                    <button type="button" name="editar" *ngIf="botonesHabilitadosEquipo" [routerLink]="['/equipos/form', equipo.idEquipo,{ idEvento: evento.idEvento }]" class="btn btn-primary mx-2">
+                      <i class="fas fa-edit"></i>
+                    </button>                    
+                    <button type="button" name="eliminar" *ngIf="botonesHabilitadosEquipo" (click)="deleteEquipo(equipo)" class="btn btn-danger mx-2">
+                      <i class="fas fa-trash-alt"></i> 
+                    </button>                   
+                  </div>
+
+                </div>  
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div *ngIf="erroresEquipo">
+        <div class="alert alert-info">
+            No hay equipos para el evento.
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

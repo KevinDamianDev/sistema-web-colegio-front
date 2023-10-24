@@ -4,12 +4,14 @@ import { Router } from '@angular/router';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Jugador } from './jugador';
 import Swal from 'sweetalert2';
+import { EquipoJugador } from './equipo-jugador';
 @Injectable({
   providedIn: 'root'
 })
 export class JugadorService {
 
   private url : string ='http://localhost:8080/jugadores';
+  private urlEquipoJugador : string ='http://localhost:8080/equipojugador';
   private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(private http: HttpClient,
@@ -72,4 +74,34 @@ subirFoto(archivo: File, id){
 
 }
 
+        // MUESTRA LOS EQUIPOS_JUGADORES DE UN EQUIPO
+        getEquiposJugadoresByEquipo(id): Observable<any>{
+          console.log('entr al service jugador')
+          return this.http.get<any>(`${this.urlEquipoJugador}/equipos/${id}`).pipe(
+            catchError(e =>{
+              return throwError(e); 
+            } )
+          )
+        }
+
+        // CREA EQUIPO_JUGADOR
+        createEquipoJugador(equipoJugador: EquipoJugador) : Observable<any>{
+          console.log('equipoJugador::: --> ', JSON.stringify(equipoJugador,     null, 2));
+          return this.http.post<any>(this.urlEquipoJugador+ '/', equipoJugador, {headers : this.httpHeaders}).pipe(
+            catchError(e =>{
+              Swal.fire('Error',e.error.mensaje, 'error');
+              return throwError(e);
+            } )
+          )
+        }
+
+              // ELIMINA EQUIPOS DE GRUPOS
+      deleteEquipoJugador(id:number): Observable<any>{
+        return this.http.delete<any>(`${this.urlEquipoJugador}/${id}`,{headers : this.httpHeaders}).pipe(
+          catchError(e =>{
+            Swal.fire('Error.' , e.error.mensaje, 'error');
+            return throwError(e);
+          } )
+        )
+      }
 }

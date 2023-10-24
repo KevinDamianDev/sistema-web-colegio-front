@@ -1,0 +1,45 @@
+<div class="card  border-primary  mb-3">
+    <div class="card-header">DUELOS</div>
+    <div class="card-body text-success" >
+
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/duelos/form']" class="btn btn-rounded btn-primary" >Crear Duelo</button>
+      </div>
+      <div class="table-responsive">
+        <div *ngIf="duelos?.length==0" class="alert alert-info">
+          No hay registros en la base de datos!
+        </div>
+      <table class="table" *ngIf="duelos?.length>0" >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRE DUELO</th>
+            <th>FECHA DUELO</th>
+            <th>LUGAR </th>
+            <th>FECHA</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let duelo of duelos" >
+            <td>{{duelo.idDuelo}}</td>
+            <td>{{duelo.nombreDuelo}}</td>
+            <td>{{duelo.fechaDuelo | date:"EEEE dd, MMM yyyy"}}</td>
+            <td>{{duelo.lugarDuelo}}</td>
+            <td>{{duelo.fecha.nombreFecha}}</td>
+            <td>
+                <button type="button" name="editar" [routerLink]="['/duelos/form',duelo.idDuelo]"
+                class="btn btn-primary" >Editar</button>
+            </td>
+            <td>
+                <button type="button" name="eliminar" (click)="delete(duelo)"
+                class="btn btn-danger" >Eliminar</button>
+            </td>
+          </tr>
+        </tbody>   
+      </table>
+      </div>
+    </div>
+</div>      
+

@@ -1,0 +1,54 @@
+<div class="card bg-secondary  text-white"  >
+    <div class="card-header"> {{titulo}} -- {{nombreFase}} </div>
+      <div class="card-body">
+  <form #form="ngForm"> 
+    <div class="form-group row">
+      <label for="nombreGrupo" class="col-form-label col-sm-2" >Nombre Grupo:</label>
+        <div class="col-sm-6">
+            <input type="text"class="form-control" [(ngModel)]="grupo.nombreGrupo" name="nombreGrupo" required minlength="4" #nombre="ngModel">
+            <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" >
+              <div *ngIf="nombre.errors.required">
+                  Nombre de grupo es requerido.
+              </div>
+              <div *ngIf="nombre.errors.minlength">
+                  Nombre de grupo debe tener al menos 4 caracteres.
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+      <label for="nombreFase" class="col-form-label col-sm-2" >Fase:</label>
+        <div class="col-sm-6">
+          <label *ngIf="faseExiste"  class="form-control">{{nombreFase}}</label> 
+        </div>
+                 
+    </div>
+<!--
+    <div class="form-group row">
+        <label for="fase" class="col-form-label col-sm-2" >Fase:</label>
+        <div class="col-sm-6">
+            <select [compareWith]="compararFase" class="form-control" [(ngModel)]="grupo.fase" name="fase" required #fase="ngModel" >
+              <option [ngValue]="undefined">--Seleccionar Fase--</option>
+              <option *ngFor="let fase of fases" [ngValue]="fase">{{fase.nombreFase}}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="fase.invalid && (fase.dirty || fase.touched)" >
+              <div *ngIf="fase.errors.required">
+                Fase es requerido.
+              </div>
+            </div>
+        </div>
+      </div>
+-->
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <button role="button" [disabled]="!form.form.valid"  class="btn btn-primary mr-3"  name="button" (click)="createGrupoByFase()" *ngIf="!grupo.idGrupo else elseBlock" >Crear</button>  
+      <ng-template #elseBlock>
+        <button role="button"[disabled]="!form.form.valid"   class="btn btn-primary mr-3"  name="button" (click)="update()"  >Actualizar</button>  
+      </ng-template>
+      <button role="button" [routerLink]="['/detalle/eventoFecha/',idFaseExiste]"  class="btn btn-danger"  name="button"  >Cancelar</button>  
+      </div>
+    </div> 
+  </form>  
+</div>
+</div>
+

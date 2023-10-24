@@ -1,17 +1,43 @@
 <app-detalle-jugador *ngIf="jugadorSeleccionado" [jugador]="jugadorSeleccionado" ></app-detalle-jugador>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <hr style="border-top: 2px solid #000000; margin: 10px 0;"> <!-- Línea horizontal con estilo inline (rojo) -->
+      <div class="d-flex align-items-center">
+        <i class="fa fa-arrow-left" [routerLink]="['/detalle/evento',idEvento]" style="cursor: pointer;"></i>
+        <h5 style="font-size: 15px; margin-left: 20px;">Detalle del evento</h5> <!-- Texto "Detalle de evento" más grande con margen izquierdo -->
+      </div>
+      <hr style="border-top: 2px solid #000000; margin: 5px 0;"> <!-- Otra línea horizontal con estilo inline (rojo) -->
+    </div>
+  </div>
+   <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-primary" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+            {{nombreEquipo}}
+          </div>
+      </div>
+    </div>
+  </div>
 
-<div class="card  border-primary  mb-3">
+  
+<div class="container">
+  <div class="card  border-primary  mb-3">
     <div class="card-header">JUGADORES</div>
     <div class="card-body text-success" >
-
       <div class="my-2 text-left">
-        <button type="button" [routerLink]="['/jugadores/form']" class="btn btn-rounded btn-primary" >Crear Jugador</button>
+        <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
       </div>
+
+      <div class="my-2 text-left" *ngIf="botonesHabilitados">
+        <button type="button" [routerLink]="['/jugador/form',{ idEquipo:idEquipo }]" 
+        class="btn btn-rounded btn-primary" >Crear Jugador</button>
+      </div>
+<br>
       <div class="table-responsive">
-        <div *ngIf="jugadores?.length==0" class="alert alert-info">
-          No hay registros en la base de datos!
+        <div *ngIf="!equipoJugador" class="alert alert-info">
+          No hay jugadores para el equipo!
         </div>
-      <table class="table" *ngIf="jugadores?.length>0" >
+      <table class="table" *ngIf="equipoJugador?.length>0" >
         <thead>
           <tr>
             <th>Foto</th>
@@ -19,34 +45,38 @@
             <th>Dni</th>
             <th>Fecha N.</th>
             <th>Dorsal</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th *ngIf="botonesHabilitados">Editar</th>
+            <th *ngIf="botonesHabilitados">Eliminar</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let jugador of jugadores" >
-            <td> <img (click)="abrirModal(jugador)" *ngIf="jugador?.foto" src="http://localhost:8080/jugadores/uploads/img/{{jugador.foto}}" alt="{{jugador.foto}}" class="img-thumbnail rounded" 
+          <tr *ngFor="let jugador of equipoJugador" >
+            <td> <img (click)="abrirModal(jugador.jugador)" *ngIf="jugador.jugador?.foto" src="http://localhost:8080/jugadores/uploads/img/{{jugador.jugador.foto}}" alt="{{jugador.jugador.foto}}" class="img-thumbnail rounded" 
               style="width: 80px; cursor: pointer;" >
-              <img (click)="abrirModal(jugador)" *ngIf="!jugador?.foto" src="http://localhost:8080/images/no_jugador.png" alt="Sin foto" class="img-thumbnail rounded" 
+              <img (click)="abrirModal(jugador.jugador)" *ngIf="!jugador.jugador?.foto" src="http://localhost:8080/images/no_jugador.png" alt="Sin foto" class="img-thumbnail rounded" 
               style="width: 80px; cursor: pointer;" >
             </td>
-              <td>{{jugador.nombreJugador}}</td>
-              <td>{{jugador.dni}}</td>
-              <td>{{jugador.fechaNJugador  | date:"EEEE dd, MMM yyyy"}}</td>
-              <td>{{jugador.dorsalJugador}}</td>
-              <td>
-                <button type="button" name="editar" [routerLink]="['/jugadores/form',jugador.idJugador]"
+              <td>{{jugador.jugador.nombreJugador}}</td>
+              <td>{{jugador.jugador.dni}}</td>
+              <td>{{jugador.jugador.fechaNJugador  | date:"EEEE dd, MMM yyyy"}}</td>
+              <td>{{jugador.jugador.dorsalJugador}}</td>
+              <td *ngIf="botonesHabilitados">
+                <button type="button" name="editar" [routerLink]="['/jugadores/form',jugador.jugador.idJugador]"
                 class="btn btn-primary" >Editar</button>
               </td>
-              <td>
-                <button type="button" name="eliminar" (click)="delete(jugador)"
+              <td *ngIf="botonesHabilitados">
+                <button type="button" name="eliminar" (click)="eliminarEquipoJugador(jugador.idEquipoJugador)"
                 class="btn btn-danger" >Eliminar</button>
               </td>
           </tr>
         </tbody>
+
     
       </table>
       </div>
 
     </div>
-</div>   
+</div>  
+
+</div>
+ 

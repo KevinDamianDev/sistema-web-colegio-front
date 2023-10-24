@@ -3,6 +3,12 @@ import { Jugador } from './jugador';
 import { JugadorService } from './jugador.service';
 import Swal from 'sweetalert2';
 import { ModalJugadorServiceService } from './detalle/detalle-jugador/modal-jugador-service.service';
+import { EquipoJugador } from './equipo-jugador';
+import { ActivatedRoute } from '@angular/router';
+import { EventoService } from '../evento/evento.service';
+import { Evento } from '../evento/evento';
+import { Equipo } from '../equipos/equipo';
+import { EquipoService } from '../equipos/equipo.service';
 @Component({
   selector: 'app-jugadores',
   templateUrl: './jugadores.component.html'
@@ -11,27 +17,82 @@ export class JugadoresComponent {
 
   jugadores : Jugador[];
   jugadorSeleccionado: Jugador;
+  equipoJugador: EquipoJugador[];
+  mensajeJugadores: string;
 
+  evento: Evento;
+  idEvento: number;
+ // nombreEvento: string;
 
-  
+  equipo: Equipo;
+  idEquipo: number;
+  nombreEquipo: string;
+
+  public checkboxSeleccionado: boolean = false;
+  public botonesHabilitados: boolean = false;
+
   constructor(private jugadorService: JugadorService,
-    private modalService: ModalJugadorServiceService){}
+    private modalService: ModalJugadorServiceService, private activate: ActivatedRoute,
+    private eventoService: EventoService, private equipoService: EquipoService){}
 
 
     ngOnInit():void {
-      this.jugadorService.getJugadores().subscribe(
-        p => this.jugadores = p  
-      );
-  
+      this.cargarEquiposJugadorsByEquipo();
+      this.modal();
+      this.cargarEvento();
+
+    }
+
+   modal(): void{
       this.modalService.notifica.subscribe(e =>{
-        this.jugadores = this.jugadores.map(eO =>{
-          if(e.idJugador == eO.idJugador){
-            eO.foto = e.foto;
-          }
-          return eO;
-        })
+        this.cargarEquiposJugadorsByEquipo();
       })
     }
+
+
+// CARGA LOS EQUIPOS_JUGADORES SEGUN EQUIPO
+cargarEquiposJugadorsByEquipo(): void {
+  this.activate.params.subscribe(params =>{
+    var idEquipo =  params['id']
+    console.log('idEquipo' + idEquipo)
+    if(idEquipo){
+      this.idEquipo = idEquipo;
+      this.jugadorService.getEquiposJugadoresByEquipo(idEquipo).subscribe({
+        next: (value: any) =>{
+            this.equipoJugador = value;
+            console.log('equipoJugador:::', JSON.stringify(this.equipoJugador, null, 2));
+        },
+        error: (error: any) =>{
+          this.mensajeJugadores = error.error.mensaje;
+          //console.log('mensajeError:::' + this.mensajeError)
+        }
+      });
+      // CARGA EQUIPO
+      this.equipoService.getEquipo(idEquipo).subscribe({
+        next: (value: any) =>{
+          this.equipo = value;
+          this.nombreEquipo= this.equipo.nombreEquipo;
+        }
+      })
+      }
+  })
+}
+
+cargarEvento(): void {
+  this.activate.params.subscribe((params) => {
+    const idEvento = params['idEvento'];
+    console.log('idEvento' + idEvento)
+    if (idEvento) {
+      this.eventoService.getEvento(idEvento).subscribe((e) => {
+        this.evento = e;
+        this.idEvento= e.idEvento;
+        //this.nombreEvento = e.nombreEvento;
+      });       
+    }
+  });
+}
+
+
   
     delete(jugador: Jugador): void{
       const swalWithBootstrapButtons = Swal.mixin({
@@ -74,4 +135,45 @@ export class JugadoresComponent {
     }
     
 
+// ELIMINA UN EQUIPO_JUGADOR
+
+    eliminarEquipoJugador(idEquipoJugador: number): void{
+      console.log('idEquipoJugador:::' +idEquipoJugador)
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+    
+      swalWithBootstrapButtons.fire({
+        title: 'Estas Seguro?',
+        text: `¿Seguro que deseas eliminar el jugador del equipo ?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar!',
+        cancelButtonText: 'No, cancelar!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //console.log(' this.equipoGrupo ELIMINAR::::'+JSON.stringify(this.equipoGrupo, null, 2));
+          this.jugadorService.deleteEquipoJugador(idEquipoJugador).subscribe(
+            response => {
+              this.cargarEquiposJugadorsByEquipo();
+              swalWithBootstrapButtons.fire(
+                'Jugador Eliminado!',
+                `Jugador eliminado del equipo..!`,
+                'success'
+              )
+            }
+          )
+    
+        }
+        //location.reload();
+      });
+    }
+    toggleBotones() {
+      this.botonesHabilitados = !this.botonesHabilitados;
+    }
 }

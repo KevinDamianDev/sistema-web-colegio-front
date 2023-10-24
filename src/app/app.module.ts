@@ -28,10 +28,34 @@ import { JugadorService } from './jugadores/jugador.service';
 import { EventoComponent } from './evento/evento.component';
 import { EventoFormComponent } from './evento/form/evento-form/evento-form.component';
 import { EventoService } from './evento/evento.service';
+import { FasesComponent } from './fases/fases.component';
+import { FasesService } from './fases/fases.service';
+import { FaseFormComponent } from './fases/form/fase-form/fase-form.component';
+import { FechasComponent } from './fechas/fechas.component';
+import { FechaFormComponent } from './fechas/form/fecha-form/fecha-form.component';
+import { FechasService } from './fechas/fechas.service';
+import { GruposComponent } from './grupos/grupos.component';
+import { FormGrupoComponent } from './grupos/form/form-grupo/form-grupo.component';
+import { GrupoService } from './grupos/grupo.service';
+import { DuelosComponent } from './duelos/duelos.component';
+import { FormDueloComponent } from './duelos/form/form-duelo/form-duelo.component';
+import { DueloService } from './duelos/duelo.service';
+import { EquipoGrupoComponent } from './equipo-grupo/equipo-grupo.component';
+import { EquipoGrupoService } from './equipo-grupo/equipo-grupo.service';
+import { DetalleEventoComponent } from './detalle-evento/detalle-evento.component';
+import { DetalleEventoFechaComponent } from './detalle-evento/detalleEventoFechas/detalle-evento-fecha/detalle-evento-fecha.component';
+import { AsignarEquiposComponent } from './asignar-equipos/asignar-equipos.component';
+import { AsignarEquipoGrupoService } from './asignar-equipos/asignar-equipo-grupo.service';
+import { DueloFechaComponent } from './duelo-fecha/duelo-fecha.component';
+import { NgPipesModule } from 'ngx-pipes';
+import { DetalleEstadisticaComponent } from './equipo-grupo/estadisticas/detalle-estadistica/detalle-estadistica.component';
+import { ModalEstadisticaService } from './equipo-grupo/estadisticas/detalle-estadistica/modal-estadistica.service';
+import { LoginComponent } from './personas/login.component';
+
 
   registerLocaleData(localeEs, 'es');
 const routes: Routes= [
-  {path: '', redirectTo:'/personas', pathMatch: 'full'},
+  {path: '', redirectTo:'/eventos', pathMatch: 'full'},
   {path: 'personas', component: PersonasComponent},
   {path: 'personas/form', component: FormComponent},
   {path: 'personas/form/:id', component: FormComponent},
@@ -45,13 +69,43 @@ const routes: Routes= [
   {path: 'equipos/form/:id', component: EquipoFormComponent},
  // {path: 'equipos/ver/:id', component: DetalleComponent},
 
- {path: 'jugadores', component: JugadoresComponent},
- {path: 'jugadores/form', component: JugadorFormComponent},
+ {path: 'jugadores/:id', component: JugadoresComponent},
+ {path: 'jugador/form', component: JugadorFormComponent},
  {path: 'jugadores/form/:id', component: JugadorFormComponent},
 
  {path: 'eventos', component: EventoComponent},
  {path: 'eventos/form', component: EventoFormComponent},
  {path: 'eventos/form/:id', component: EventoFormComponent},
+
+ {path: 'fases', component: FasesComponent},
+ {path: 'fases/form', component: FaseFormComponent},
+ {path: 'fases/form/:id', component: FaseFormComponent},
+
+ {path: 'fechas', component: FechasComponent},
+ {path: 'fechas/form', component: FechaFormComponent},
+ {path: 'fechas/form/:id', component: FechaFormComponent},
+
+ {path: 'grupos', component: GruposComponent},
+ {path: 'grupos/form', component: FormGrupoComponent},
+ {path: 'grupos/form/:id', component: FormGrupoComponent},
+
+ {path: 'duelos', component: DuelosComponent},
+ {path: 'duelos/form', component: FormDueloComponent},
+ {path: 'duelos/form/:id', component: FormDueloComponent},
+
+ {path: 'detalle/evento/:id', component: DetalleEventoComponent},
+
+ {path: 'detalle/eventoFecha/:id', component: DetalleEventoFechaComponent},
+
+ {path: 'asignarEquipoGrupo', component: AsignarEquiposComponent},
+
+ {path: 'dueloFecha', component: DueloFechaComponent},
+
+ {path: 'equiposGrupo', component: EquipoGrupoComponent},
+
+ {path: 'estadisticaEquipo/:id', component: DetalleEstadisticaComponent},
+
+ {path: 'login', component: LoginComponent},
 ]
 
 @NgModule({
@@ -72,16 +126,34 @@ const routes: Routes= [
     JugadorFormComponent,
     DetalleJugadorComponent,
     EventoComponent,
-    EventoFormComponent
+    EventoFormComponent,
+    FasesComponent,
+    FaseFormComponent,
+    FechasComponent,
+    FechaFormComponent,
+    GruposComponent,
+    FormGrupoComponent,
+    DuelosComponent,
+    FormDueloComponent,
+    EquipoGrupoComponent,
+    DetalleEventoComponent,
+    DetalleEventoFechaComponent,
+    AsignarEquiposComponent,
+    DueloFechaComponent,
+    DetalleEstadisticaComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
+    NgPipesModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [PersonaService, CategoriaService, EquipoService, JugadorService, 
-    EventoService,{provide: LOCALE_ID, useValue: 'es' },],
+    EventoService, FasesService, FechasService, GrupoService,
+    DueloService, EquipoGrupoService, AsignarEquipoGrupoService,
+    ModalEstadisticaService, {provide: LOCALE_ID, useValue: 'es' },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,44 @@
+<div class="card  border-primary  mb-3">
+    <div class="card-header">FASES</div>
+    <div class="card-body text-success" >
+
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/fases/form']" class="btn btn-rounded btn-primary" >Crear Fase</button>
+      </div>
+      <div class="table-responsive">
+        <div *ngIf="fases?.length==0" class="alert alert-info">
+          No hay registros en la base de datos!
+        </div>
+      <table class="table" *ngIf="fases?.length>0" >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRE FASE</th>
+            <th>EVENTO</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fase of fases" >
+            <td>{{fase.idFase}}</td>
+              <td>{{fase.nombreFase}}</td>
+              <td>{{fase.evento.nombreEvento}}</td>
+              <td>
+                <button type="button" name="editar" [routerLink]="['/fases/form',fase.idFase]"
+                class="btn btn-primary" >Editar</button>
+              </td>
+              <td>
+                <button type="button" name="eliminar" (click)="delete(fase)"
+                class="btn btn-danger" >Eliminar</button>
+              </td>
+          </tr>
+        </tbody>
+    
+      </table>
+      </div>
+
+    </div>
+</div>      
+
+

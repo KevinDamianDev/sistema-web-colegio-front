@@ -21,12 +21,18 @@ export class FormComponent {
         
       }
 
+
+      
 cargarPersona():void{
   this.activate.params.subscribe(params =>{
     var id =  params['id']
     if(id){
       this.personaService.getPersona(id).subscribe(
-        (persona) => this.persona = persona)
+        (persona) => {
+          this.persona = persona;
+          //this.persona.estadoPersona = persona.estadoPersona === 1 ? true : false;
+
+        })
       }
   })
 }

@@ -5,7 +5,9 @@ export class Persona {
     correoPersona:string;
     dniPersona: number; 
     fechaNacPersona: string;
-    estadoPersona: string;
+    estadoPersona: boolean;
     usuarioPersona: string;
     passwordPersona: string;
+
+
 }

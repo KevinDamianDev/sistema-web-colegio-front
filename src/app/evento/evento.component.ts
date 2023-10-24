@@ -42,7 +42,7 @@ export class EventoComponent {
             this.eventos = this.eventos.filter(p => p!==evento)
             swalWithBootstrapButtons.fire(
               'Evento Eliminado!',
-              `Evento ${evento.nombreEvento} eliminada con exito..!`,
+              `Evento ${evento.nombreEvento} eliminado con exito..!`,
               'success'
             )
           }

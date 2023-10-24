@@ -1,0 +1,131 @@
+
+  
+  <div class="card bg-secondary  text-white"  >
+    <div class="card-header"> {{titulo}} </div>
+      <div class="card-body">
+  
+  <form #form="ngForm" *ngIf="estadistica">
+  
+  
+    <div class="form-group row" >
+        <label for="puntos" class="col-form-label col-sm-5" >Puntos de equipo:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.puntos" name="puntos" required #puntos="ngModel">
+          <div class="alert alert-danger" *ngIf="puntos.invalid && (puntos.dirty || puntos.touched)" >
+            <div *ngIf="puntos.errors.required">
+                Puntos son requerido.
+            </div>
+          </div>
+        </div>
+    </div>
+  
+
+    <div class="form-group row">
+        <label for="jugados" class="col-form-label col-sm-5" >Partidos jugados:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.jugados" name="jugados" required #jugados="ngModel">
+          <div class="alert alert-danger" *ngIf="jugados.invalid && (jugados.dirty || jugados.touched)" >
+            <div *ngIf="jugados.errors.required">
+                Partidos jugados son requeridos.
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="ganados" class="col-form-label col-sm-5" >Partidos ganados:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.ganados" name="ganados" required #ganados="ngModel">
+          <div class="alert alert-danger" *ngIf="ganados.invalid && (ganados.dirty || ganados.touched)" >
+            <div *ngIf="ganados.errors.required">
+                Partidos ganados son requeridos.
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="empatados" class="col-form-label col-sm-5" >Partidos empatados:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.empatados" name="empatados" required #empatados="ngModel">
+          <div class="alert alert-danger" *ngIf="empatados.invalid && (empatados.dirty || empatados.touched)" >
+            <div *ngIf="ganados.errors.required">
+                Partidos empatados son requeridos.
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="empatados" class="col-form-label col-sm-5" >Partidos perdidos:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.perdidos" name="perdidos" required #perdidos="ngModel">
+          <div class="alert alert-danger" *ngIf="perdidos.invalid && (perdidos.dirty || perdidos.touched)" >
+            <div *ngIf="perdidos.errors.required">
+                Partidos perdidos son requeridos.
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="golesFavor" class="col-form-label col-sm-5" >Goles a favor:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.golesFavor" name="golesFavor" required #golesFavor="ngModel">
+          <div class="alert alert-danger" *ngIf="golesFavor.invalid && (golesFavor.dirty || golesFavor.touched)" >
+            <div *ngIf="golesFavor.errors.required">
+               Goles a favor son requeridos.
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="golesContra" class="col-form-label col-sm-5" >Goles en contra:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.golesContra" name="golesContra" required #golesContra="ngModel">
+          <div class="alert alert-danger" *ngIf="golesContra.invalid && (golesContra.dirty || golesContra.touched)" >
+            <div *ngIf="golesContra.errors.required">
+               Goles en contra son requeridos.
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="diferenciaGoles" class="col-form-label col-sm-5" >Diferencia de goles:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.diferenciaGoles" name="diferenciaGoles" required #diferenciaGoles="ngModel">
+          <div class="alert alert-danger" *ngIf="diferenciaGoles.invalid && (diferenciaGoles.dirty || diferenciaGoles.touched)" >
+            <div *ngIf="diferenciaGoles.errors.required">
+               Diferencia de goles son requeridos.
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="penales" class="col-form-label col-sm-5" >Penales:</label>
+        <div class="col-sm-3">
+          <input type="number"class="form-control" [(ngModel)]="estadistica.penales" name="penales" required #penales="ngModel">
+          <div class="alert alert-danger" *ngIf="penales.invalid && (penales.dirty || penales.touched)" >
+            <div *ngIf="penales.errors.required">
+              Penales son requeridos.
+            </div>
+          </div>
+        </div>
+    </div>
+
+  
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <button type="button"[disabled]="!form.form.valid"   class="btn btn-primary  mr-3"  name="button" (click)="updateEstadistica()"  >Actualizar</button>  
+      <button type="button" (click)="cancelar()"  class="btn btn-danger"  name="button"  >Cancelar</button>  
+      </div>
+    </div>
+  
+  </form>
+  
+      </div>
+  </div>
+  

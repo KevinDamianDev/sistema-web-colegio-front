@@ -1,0 +1,41 @@
+<div class="card  border-primary  mb-3">
+    <div class="card-header">GRUPOS</div>
+    <div class="card-body text-success" >
+
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/grupos/form']" class="btn btn-rounded btn-primary" >Crear Grupo</button>
+      </div>
+      <div class="table-responsive">
+        <div *ngIf="grupos?.length==0" class="alert alert-info">
+          No hay registros en la base de datos!
+        </div>
+      <table class="table" *ngIf="grupos?.length>0" >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRE GRUPO</th>
+            <th>FASE</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let grupo of grupos" >
+            <td>{{grupo.idGrupo}}</td>
+              <td>{{grupo.nombreGrupo}}</td>
+              <td>{{grupo.fase.nombreFase}}</td>
+              <td>
+                <button type="button" name="editar" [routerLink]="['/grupos/form',grupo.idGrupo]"
+                class="btn btn-primary" >Editar</button>
+              </td>
+              <td>
+                <button type="button" name="eliminar" (click)="delete(grupo)"
+                class="btn btn-danger" >Eliminar</button>
+              </td>
+          </tr>
+        </tbody>   
+      </table>
+      </div>
+    </div>
+</div>      
+

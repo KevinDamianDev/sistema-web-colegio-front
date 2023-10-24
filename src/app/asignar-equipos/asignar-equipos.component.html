@@ -1,0 +1,237 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <hr style="border-top: 2px solid #000000; margin: 10px 0;"> <!-- Línea horizontal con estilo inline (rojo) -->
+            <div class="d-flex align-items-center">
+                <i class="fa fa-arrow-left" [routerLink]="['/detalle/eventoFecha',idFase]" style="cursor: pointer;"></i>
+                <h5 style="font-size: 15px; margin-left: 20px;">Asignar Equipos a Grupos</h5> <!-- Texto "Detalle de evento" más grande con margen izquierdo -->
+            </div>
+            <hr style="border-top: 2px solid #000000; margin: 5px 0;"> <!-- Otra línea horizontal con estilo inline (rojo) -->
+        </div>
+    </div>
+    <br>
+    <div class="alert alert-primary" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+      Selecciona un Equipo y un Grupo para asignar
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white  text-center">
+                    Equipos Disponibles
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let equipo of equipos">
+                        {{equipo.nombreEquipo}}
+                        <button class="btn btn-success btn-sm float-right" (click)="seleccionarEquipo(equipo)">Seleccionar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white  text-center">
+                    Grupos en la Fase
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let grupo of grupos">
+                        {{grupo.nombreGrupo}}
+                        <button class="btn btn-success btn-sm float-right" (click)="seleccionarGrupo(grupo)">Seleccionar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<br>
+<div class="container">
+    <form (ngSubmit)="asignarEquipoAGrupo()" >
+    
+    <div class="row">
+        <div class="col-md-6"> 
+            
+            <div class="form-group mt-2 mb-2">
+                <label for="equipoSelect" class="mr-3">Equipo:</label>
+                <select id="equipoSelect" class="form-control" name="equipoSeleccionado" [(ngModel)]="equipoSeleccionado" style="height: 40px; width: 100%;"> <!-- Modifica el ancho a 100% para ocupar toda la mitad -->
+                    <option *ngFor="let equipo of equipos" [ngValue]="equipo">{{equipo.nombreEquipo}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6"> 
+            <div class="form-group mt-2 mb-2">
+                <label for="grupoSelect" class="mr-3">Grupo:</label>
+                <select id="grupoSelect" class="form-control" name="grupoSeleccionado" [(ngModel)]="grupoSeleccionado" style="height: 40px; width: 100%;"> <!-- Modifica el ancho a 100% para ocupar toda la mitad -->
+                    <option *ngFor="let grupo of grupos" [ngValue]="grupo">{{grupo.nombreGrupo}}</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="mt-2 mb-2"> 
+            <button type="submit" class="btn btn-primary btn-block">Asignar Equipo a Grupo</button> 
+        </div>
+    </div>
+</form>
+</div>
+  <br>
+  <br>
+
+
+    
+    
+  <div class="container">
+    <div class="row">
+      <div *ngIf="isEmptyObject(gruposEquipos)">
+        No hay equipos asignados a grupos
+      </div>
+      <ng-container *ngFor="let grupo of gruposEquipos | keyvalue; let i = index">
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-header" style="background-color: #17a2b8; color: #fff; text-align: center;">
+              {{ grupo.key }}
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" *ngFor="let equipo of grupo.value">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                      <img *ngIf="equipo.equipo?.foto" src="http://localhost:8080/equipos/uploads/img/{{equipo.equipo.foto}}" alt="{{equipo.equipo.foto}}" class="card-img-top img-thumbnail rounded" style="width: 50px; height: 50px;">
+                      <img *ngIf="!equipo.equipo?.foto" src="http://localhost:8080/images/no_equipo.png" alt="Sin foto" class="card-img-top img-thumbnail rounded" style="width: 50px; height: 50px;">
+                      <span>   {{equipo.equipo.nombreEquipo }}</span>
+                    </div>
+                    <div>
+                      <button class="btn btn-danger" title="Eliminar equipo del grupo." (click)="eliminarEquipoGrupo(equipo.idEquipoGrupo)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                      <!-- Aquí agrega un botón adicional -->
+                      <button class="btn btn-success" title="Agregar equipo al duelo." (click)="seleccionarEquipoGrupo(equipo)">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Agregar una nueva fila después de cada segundo grupo -->
+        <div class="w-100" *ngIf="i % 2 === 1"></div>
+      </ng-container>
+    </div>
+    <br>
+    <br>
+    <hr style="border-top: 2px solid #000000; margin: 5px 0;">
+  </div>
+  
+    
+    
+
+
+  <!-- APARTADO DE DUELOS -->
+<br>
+<br>
+  <div class="container">
+    <div class="alert alert-primary" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+      Selecciona un Equipo de un grupo y un Duelo para asignar
+    </div>
+    <form (ngSubmit)="asignarEquipoGrupoADuelo()" >
+      <div class="row">
+      <div class="col-md-6">            
+        <div class="form-group mt-2 mb-2">
+            <label for="equipoSelect" class="mr-3">Equipo -- Grupo:</label>
+            <select id="equipoSelect" class="form-control" name="equipoGrupoSeleccionado" [(ngModel)]="equipoGrupoSeleccionado" style="height: 40px; width: 100%;"> <!-- Modifica el ancho a 100% para ocupar toda la mitad -->
+                <option *ngFor="let equipoG of equiposGrupos" [ngValue]="equipoG">{{equipoG.equipo.nombreEquipo}}     --    {{equipoG.grupo.nombreGrupo}} </option>
+            </select>
+        </div>
+    </div>
+
+    
+        <div class="col-md-6">            
+            <div class="form-group mt-2 mb-2">
+                <label for="dueloSelect" class="mr-3">Duelo:</label>
+                <select id="dueloSelect" class="form-control" name="dueloSeleccionado" [(ngModel)]="dueloSeleccionado" style="height: 40px; width: 100%;"> <!-- Modifica el ancho a 100% para ocupar toda la mitad -->
+                    <option *ngFor="let duelo of duelos" [ngValue]="duelo">{{duelo.nombreDuelo}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mt-2 mb-2"> 
+            <button type="submit" class="btn btn-primary btn-block">Asignar Equipo a Duelo</button> 
+        </div>
+    </div>
+</form>
+
+</div>
+
+
+
+
+  <div class="container">
+  
+    <br>
+    <br>
+
+    <div class="row">
+      <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white  text-center">
+                    Duelos disponibles
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let duelo of duelos">
+                        {{duelo.nombreDuelo}} ||
+                        {{duelo.fechaDuelo}} ||
+                       Lugar: {{duelo.lugarDuelo}} ||
+                       Estado: {{duelo.estado}}
+                        <button class="btn btn-success btn-sm float-right" (click)="seleccionarDuelo(duelo)">Seleccionar</button>
+                    </li>
+                </ul>
+            </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+<!-- APARTADO DE EQUIPOS Y DUELOS -->
+<br>
+<br>
+
+<div class="container">
+  <div class="row">
+    <div *ngIf="isEmptyObject(duelosEquipos)">
+      No hay equipos asignados a duelos.
+    </div>
+    <ng-container *ngFor="let duelo of duelosEquipos | keyvalue; let i = index">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header" style="background-color: #17a2b8; color: #fff; text-align: center;">
+            {{ duelo.key }}
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let duelo of duelo.value">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+
+                    <span>   {{duelo.equipoGrupo.equipo.nombreEquipo }}</span>
+                  </div>
+                  <button class="btn btn-danger" title="Eliminar equipo del duelo." (click)="eliminarEquipoGrupoDuelo(duelo.idEquipoGrupoDuelo)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Agregar una nueva fila después de cada segundo grupo -->
+      <div class="w-100" *ngIf="i % 2 === 1"></div>
+    </ng-container>
+  </div>
+</div>
