@@ -7,6 +7,8 @@ import { Fase } from '../fases/fase';
 import { Fecha } from '../fechas/fecha';
 import { DueloService } from '../duelos/duelo.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../personas/auth.service';
+import { ModalJugadorServiceService } from '../jugadores/detalle/detalle-jugador/modal-jugador-service.service';
 
 @Component({
   selector: 'app-duelo-fecha',
@@ -26,12 +28,34 @@ export class DueloFechaComponent {
   public checkboxSeleccionado: boolean = false;
   public botonesHabilitados: boolean = false;
 
-  constructor( private faseService: FasesService, private route: ActivatedRoute,private dueloService: DueloService,
-    private fechaService: FechasService){}
-  ngOnInit(): void {
+  dueloSeleccionado: Duelo;
 
+  constructor( 
+    private faseService: FasesService, 
+    private route: ActivatedRoute,
+    private dueloService: DueloService,
+    private fechaService: FechasService,
+    public auth: AuthService,
+    private modalService: ModalJugadorServiceService){}
+
+
+  ngOnInit(): void {
+    this.modal();
     this.cargarFechasByFase();
   }
+
+  abrirModal(duelo: Duelo){
+    this.dueloSeleccionado=duelo;
+    this.modalService.abrirModal();
+  }
+
+  modal(): void{
+    this.modalService.notifica.subscribe(e =>{
+     this.cargarFechasByFase();
+    })
+  }
+
+
 
   cargarFechasByFase(): void {
     this.route.params.subscribe((params) => {
@@ -49,7 +73,6 @@ export class DueloFechaComponent {
         },
         (error)=>{
           this.errorDuelos = error.error.mensaje;
-          console.log('this.errorDuelos' +this.errorDuelos)
         }); 
         
         // OBTENGO FECHA

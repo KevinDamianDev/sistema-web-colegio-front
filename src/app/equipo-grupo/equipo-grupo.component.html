@@ -25,7 +25,7 @@
         <div class="card-header">Estadisticas por grupo</div>
         <div class="card-body text-success" >
 
-        <div>
+        <div *ngIf="auth.hasRole('ROLE_ADMIN') || auth.hasRole('ROLE_USER')">
           <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
         </div>  
         <br>    

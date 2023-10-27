@@ -117,9 +117,42 @@
         </div>
       </div>
   </div>
+
+  <!--
+  <div class="form-group" *ngFor="let rol of roles; let i = index">
+    <input
+      type="checkbox"
+      [name]="'roles_' + i"
+      [ngModel]="persona.rolesSeleccionados.includes(rol.idRol)"
+      (ngModelChange)="toggleRol(rol.idRol)"
+    />
+    {{ rol.nombreRoles }}
+  </div>
+  -->
+  <div class="form-group row">
+    <label for="roles" class="col-form-label col-sm-2">Rol</label> <!-- Título "Rol" -->
+    <div class="col-sm-6">
+      <div *ngFor="let rol of roles; let i = index">
+        <label style="display: flex; align-items: center;">
+          <input
+            type="checkbox"
+            [name]="'roles_' + i"
+            [ngModel]="persona.rolesSeleccionados.includes(rol.idRol)"
+            (ngModelChange)="toggleRol(rol.idRol)"
+            style="margin-right: 5px; cursor: pointer;"
+          />
+          {{ rol.nombreRoles }}
+        </label>
+      </div>
+    </div>
+
+  </div>
   
-   
   
+  
+  
+  
+
     <div class="form-group row">
       <div class="col-sm-6">
         <button role="button" [disabled]="!form.form.valid"  class="btn btn-primary mr-3"  name="button" (click)="create()" *ngIf="!persona.idPersona else elseBlock" >Crear</button>  

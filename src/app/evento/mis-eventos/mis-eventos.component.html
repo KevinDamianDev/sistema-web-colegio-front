@@ -1,0 +1,44 @@
+<br>
+<div class="container">
+<div class="card  border-primary  mb-3">
+  <div class="card-header">MIS EVENTOS</div>
+  <div class="card-body text-success" >
+
+    <div class="my-2 text-left" *ngIf="auth.hasRole('ROLE_ADMIN')">
+      <button type="button" [routerLink]="['/eventos/form']" class="btn btn-rounded btn-primary" >Crear Evento</button>
+    </div>
+    <div class="table-responsive">
+      <div *ngIf="!misEventos" class="alert alert-info">
+       {{mensaje}}
+      </div>
+    <table class="table" *ngIf="misEventos?.length>0" >
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre Evento</th>
+          <th>Categoria</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evento of misEventos" >
+          <td>{{evento.idPersonaEvento}}</td>
+            <td>{{evento.evento.nombreEvento}}</td>
+            <td>{{evento.evento.nombreEvento}}</td>
+            <td>
+              <button type="button" name="detalle" [routerLink]="['/detalle/evento',evento.evento.idEvento]"
+              class="btn btn-success" >Detalles</button>
+            </td>
+        </tr>
+      </tbody>
+  
+    </table>
+    </div>
+
+  </div>
+</div>
+</div>
+      
+
+
+

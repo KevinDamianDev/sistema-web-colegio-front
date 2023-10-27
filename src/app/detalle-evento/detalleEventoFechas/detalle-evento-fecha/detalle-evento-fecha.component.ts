@@ -8,14 +8,20 @@ import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { FechasService } from 'src/app/fechas/fechas.service';
 import { GrupoService } from 'src/app/grupos/grupo.service';
+import { AuthService } from 'src/app/personas/auth.service';
 @Component({
   selector: 'app-detalle-evento-fecha',
   templateUrl: './detalle-evento-fecha.component.html'
 })
 export class DetalleEventoFechaComponent {
 
-  constructor(private faseService: FasesService,  private route: ActivatedRoute, private location: Location,
-    private fechaService: FechasService, private grupoService: GrupoService){}
+  constructor(private faseService: FasesService,  
+    private route: ActivatedRoute, 
+    private location: Location,
+    private fechaService: FechasService, 
+    private grupoService: GrupoService,
+    public auth: AuthService){}
+  
   public fase: Fase = new Fase();
 
   fechas : Fecha[];

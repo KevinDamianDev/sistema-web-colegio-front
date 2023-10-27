@@ -12,7 +12,7 @@ export class JugadorService {
 
   private url : string ='http://localhost:8080/jugadores';
   private urlEquipoJugador : string ='http://localhost:8080/equipojugador';
-  private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
+  //private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(private http: HttpClient,
     private router: Router) { }
@@ -23,9 +23,9 @@ export class JugadorService {
       );
     }
     create(jugador: Jugador) : Observable<any>{
-      return this.http.post<any>(this.url+ '/', jugador, {headers : this.httpHeaders}).pipe(
+      return this.http.post<any>(this.url+ '/', jugador).pipe(
         catchError(e =>{
-          Swal.fire('Error',e.error.mensaje, 'error');
+         // Swal.fire('Error',e.error.mensaje, 'error');
           return throwError(e);
         } )
       )
@@ -35,26 +35,26 @@ export class JugadorService {
     getJugador(id): Observable<Jugador>{
       return this.http.get<Jugador>(`${this.url}/${id}`).pipe(
         catchError(e =>{
-          this.router.navigate(['/jugadores']);
-          Swal.fire('Error',e.error.mensaje, 'error');
+          //this.router.navigate(['/jugadores']);
+          //Swal.fire('Error',e.error.mensaje, 'error');
           return throwError(e);
         })
       )
     }
 
     updateJugador(jugador: Jugador): Observable<any>{
-      return this.http.put<any> (`${this.url}/${jugador.idJugador}`, jugador,{headers : this.httpHeaders}).pipe(
+      return this.http.put<any> (`${this.url}/${jugador.idJugador}`, jugador).pipe(
         catchError(e =>{
-          Swal.fire('Error',e.error.mensaje, 'error');
+         // Swal.fire('Error',e.error.mensaje, 'error');
           return throwError(e);
         } )
       )
     }
     
     delete(id:number): Observable<Jugador>{
-      return this.http.delete<Jugador>(`${this.url}/${id}`,{headers : this.httpHeaders}).pipe(
+      return this.http.delete<Jugador>(`${this.url}/${id}`).pipe(
         catchError(e =>{
-          Swal.fire('Error.' , e.error.mensaje, 'error');
+          //Swal.fire('Error.' , e.error.mensaje, 'error');
           return throwError(e);
         } )
       )
@@ -63,11 +63,10 @@ subirFoto(archivo: File, id){
   let formData = new FormData();
   formData.append("archivo", archivo);
   formData.append("id", id);
-
   return this.http.post(`${this.url}/upload`, formData).pipe(
     map((response: any) => response.jugador as Jugador),
     catchError(e =>{
-      Swal.fire('Error' , e.error.mensaje, 'error');
+      //Swal.fire('Error' , e.error.mensaje, 'error');
       return throwError(e);
     })
   )
@@ -76,7 +75,6 @@ subirFoto(archivo: File, id){
 
         // MUESTRA LOS EQUIPOS_JUGADORES DE UN EQUIPO
         getEquiposJugadoresByEquipo(id): Observable<any>{
-          console.log('entr al service jugador')
           return this.http.get<any>(`${this.urlEquipoJugador}/equipos/${id}`).pipe(
             catchError(e =>{
               return throwError(e); 
@@ -86,10 +84,10 @@ subirFoto(archivo: File, id){
 
         // CREA EQUIPO_JUGADOR
         createEquipoJugador(equipoJugador: EquipoJugador) : Observable<any>{
-          console.log('equipoJugador::: --> ', JSON.stringify(equipoJugador,     null, 2));
-          return this.http.post<any>(this.urlEquipoJugador+ '/', equipoJugador, {headers : this.httpHeaders}).pipe(
+          //console.log('equipoJugador::: --> ', JSON.stringify(equipoJugador,     null, 2));
+          return this.http.post<any>(this.urlEquipoJugador+ '/', equipoJugador).pipe(
             catchError(e =>{
-              Swal.fire('Error',e.error.mensaje, 'error');
+              //Swal.fire('Error',e.error.mensaje, 'error');
               return throwError(e);
             } )
           )
@@ -97,9 +95,9 @@ subirFoto(archivo: File, id){
 
               // ELIMINA EQUIPOS DE GRUPOS
       deleteEquipoJugador(id:number): Observable<any>{
-        return this.http.delete<any>(`${this.urlEquipoJugador}/${id}`,{headers : this.httpHeaders}).pipe(
+        return this.http.delete<any>(`${this.urlEquipoJugador}/${id}`).pipe(
           catchError(e =>{
-            Swal.fire('Error.' , e.error.mensaje, 'error');
+           // Swal.fire('Error.' , e.error.mensaje, 'error');
             return throwError(e);
           } )
         )

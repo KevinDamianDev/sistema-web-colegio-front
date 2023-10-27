@@ -14,8 +14,9 @@ export class AsignarEquipoGrupoService {
   private urlEquipoGrupo : string ='http://localhost:8080/equipogrupos'; 
   private urlEquiposByGrupo : string ='http://localhost:8080/grupos/equipos'; 
   private urlEquipoGrupoByFase : string ='http://localhost:8080/equipogrupos/fases'; 
-  private urlEquipoGrupoDueloByFase : string ='http://localhost:8080/equipogrupoduelos/fases'; 
+  //private urlEquipoGrupoDueloByFase : string ='http://localhost:8080/equipogrupoduelos/fases'; 
   private urlEquipoGrupoDuelo : string ='http://localhost:8080/equipogrupoduelos'; 
+
 
 
   constructor(private http: HttpClient) { }
@@ -70,7 +71,7 @@ export class AsignarEquipoGrupoService {
 
 
         // MUESTRA LOS EQUIPOS_GRUPOS DE UNA FASE
-        getEquiposGruposByFase(id): Observable<any>{
+      getEquiposGruposByFase(id): Observable<any>{
           return this.http.get<any>(`${this.urlEquipoGrupoByFase}/${id}`).pipe(
             catchError(e =>{
               return throwError(e); 
@@ -79,13 +80,13 @@ export class AsignarEquipoGrupoService {
         }
 
         // MUESTRA LOS EQUIPOS_GRUPOS_DUELOS DE UNA FASE
-        getEquiposGruposDuelosByFase(id): Observable<any>{
-          return this.http.get<any>(`${this.urlEquipoGrupoDueloByFase}/${id}`).pipe(
+      getEquiposGruposDuelosByFase(id): Observable<any>{
+          return this.http.get<any>(`${this.urlEquipoGrupoDuelo}/fases/${id}`).pipe(
             catchError(e =>{
               return throwError(e); 
             } )
           )
-        }
+      }
 
 
           // AGREGAR EQUIPOS_GRUPOS_DUELOS
@@ -107,4 +108,7 @@ export class AsignarEquipoGrupoService {
           } )
         )
       }
+
+
+
 }

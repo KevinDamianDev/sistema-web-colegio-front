@@ -12,32 +12,37 @@ import { EventoEquipo } from '../equipos/evento-equipo';
 export class EventoService {
   private urlEquipoEventoAgregar : string ='http://localhost:8080/eventoEquipos'; 
   private url : string ='http://localhost:8080/eventos';
-  private urlFaseEvento : string ='http://localhost:8080/eventos/fases';
-  private urlEquipoEvento : string ='http://localhost:8080/eventos/equipos';
+ // private urlFaseEvento : string ='http://localhost:8080/eventos/fases';
+ // private urlEquipoEvento : string ='http://localhost:8080/eventos/equipos';
 
-
+ private urlEventosByPersona : string ='http://localhost:8080/personas/evento';
 
   eventoEquipo2:EventoEquipo;
 
-  private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
+  //private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(private http: HttpClient,
     private router: Router) { }
 
 
+
     getEventos(): Observable<Evento[]> {
-      return this.http.get<Evento[]>(this.url + '/').pipe(
-        map(r => r as Evento[])
-      );
+      return this.http.get<Evento[]>(this.url + '/')
+      .pipe(
+        catchError(e =>{
+          //this.isNoAutorizado(e);
+          return throwError(e);
+        })
+      )
     }
 
 
 
 
     create(evento: Evento) : Observable<any>{
-      return this.http.post<any>(this.url+ '/', evento, {headers : this.httpHeaders}).pipe(
-        catchError(e =>{
-          Swal.fire('Error' ,e.error.mensaje, 'error');
+      return this.http.post<any>(this.url+ '/', evento).pipe(
+        catchError(e =>{          
+         // Swal.fire('Error' ,e.error.mensaje, 'error');
           return throwError(e);
         } )
       )
@@ -47,8 +52,12 @@ export class EventoService {
     getEvento(id): Observable<Evento>{
       return this.http.get<Evento>(`${this.url}/${id}`).pipe(
         catchError(e =>{
-          this.router.navigate(['/eventos']);
-          Swal.fire('Error', e.error.mensaje, 'error');
+          if(e.status !=401 && e.error.mensaje ){
+            this.router.navigate(['/eventos']);
+          }
+
+          /*this.router.navigate(['/eventos']);
+          Swal.fire('Error', e.error.mensaje, 'error');*/
           return throwError(e);
         })
       )
@@ -57,26 +66,27 @@ export class EventoService {
     
     getEventoAgregarFase(id): Observable<Evento>{
       return this.http.get<Evento>(`${this.url}/${id}`).pipe(
-        (e =>{
-          console.log('getEventoAgregarFase' +e);
-          return e;
-        })
+        catchError(e =>{
+          //Swal.fire(e.error.mensaje, e.error.error, 'error');
+          return throwError(e);
+        } )
       )
     }
 
     updateEvento(evento: Evento): Observable<any>{
-      return this.http.put<any> (`${this.url}/${evento.idEvento}`, evento,{headers : this.httpHeaders}).pipe(
-        catchError(e =>{
-          Swal.fire('Error.',e.error.mensaje, 'error');
+      return this.http.put<any> (`${this.url}/${evento.idEvento}`, evento)
+      .pipe(
+        catchError(e =>{     
           return throwError(e);
         } )
       )
     }
     
     delete(id:number): Observable<Evento>{
-      return this.http.delete<Evento>(`${this.url}/${id}`,{headers : this.httpHeaders}).pipe(
+      return this.http.delete<Evento>(`${this.url}/${id}`)
+      .pipe(
         catchError(e =>{
-          Swal.fire('Error.' , e.error.mensaje, 'error');
+         // Swal.fire('Error',e.error.mensaje, 'error');
           return throwError(e);
         } )
       )
@@ -85,7 +95,7 @@ export class EventoService {
     // FASES QUE TIENE UN EVENTO
 
     getFasesEvento(id): Observable<any>{
-      return this.http.get<any>(`${this.urlFaseEvento}/${id}`).pipe(
+      return this.http.get<any>(`${this.url}/fases/${id}`).pipe(
         catchError(e =>{
           if(e.status == 404){
             return throwError(e); 
@@ -97,7 +107,7 @@ export class EventoService {
 
     // EQUIPOS QUE TIENE UN EVENTO
     getEquipoEvento(id): Observable<any>{
-      return this.http.get<any>(`${this.urlEquipoEvento}/${id}`).pipe(
+      return this.http.get<any>(`${this.url}/equipos/${id}`).pipe(
         catchError(e =>{
           if(e.status == 404){
             return throwError(e); 
@@ -127,10 +137,28 @@ export class EventoService {
         }),
         body: eventoE
     };
-    console.log(' options  ::::'+JSON.stringify(options, null, 2));
+    //console.log(' options  ::::'+JSON.stringify(options, null, 2));
       return this.http.delete(this.urlEquipoEventoAgregar+'/', options);
     }
 
+   /* private isNoAutorizado(e):boolean{
+      if(e.status==401 || e.status==403){
+        this.router.navigate(['/login']);
+        return true;
+      }
+      return false;
+    }*/
 
 
+     /*   // EVENTOS QUE TIENE UNA PERSONA
+        getEventosByPersona(id): Observable<any>{
+          return this.http.get<any>(`${this.urlEventosByPersona}/${id}`).pipe(
+            catchError(e =>{
+              if(e.status == 404){
+                return throwError(e); 
+              }
+              return throwError(e); 
+            } )
+          )
+        }*/
 }

@@ -41,7 +41,6 @@ export class FormDueloComponent {
     cargarFecha():void{
       this.activate.params.subscribe(params =>{
         var idFecha =  params['idFecha']
-        console.log('idFecha::: ' +idFecha)
         if(idFecha){
           this.fechaService.getFecha(idFecha).subscribe(
             (e) => this.fecha = e)
@@ -56,7 +55,7 @@ export class FormDueloComponent {
         json =>{
           this.cancelar();
           //this.router.navigate(['/duelos'])
-          Swal.fire('Nuevo Duelo', `Duelo  ${json.duelo.nombreDuelo} ha sido creada con éxito! `, 'success')
+          Swal.fire('Nuevo Duelo', `Duelo  ${json.duelo.nombreDuelo} ha sido creado con éxito! `, 'success')
         } 
       )
     }
@@ -67,7 +66,7 @@ export class FormDueloComponent {
       .subscribe(p =>{
         this.cancelar();
         //this.router.navigate(['/duelos'])
-        Swal.fire('Duelo actualizado', `Duelo  ${p.duelo.nombreDuelo} ha sido actualizada con éxito! `, 'success')
+        Swal.fire('Duelo actualizado', `Duelo  ${p.duelo.nombreDuelo} ha sido actualizado con éxito! `, 'success')
   
       }
    ) }

@@ -12,7 +12,6 @@ export class ModalJugadorServiceService {
     constructor() { }
   
     get notifica(): EventEmitter<any>{
-      console.log(' entra get');
       return this._notifica;
     }
   

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Evento } from './evento';
 import { EventoService } from './evento.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../personas/auth.service';
 
 @Component({
   selector: 'app-evento',
@@ -11,13 +12,19 @@ export class EventoComponent {
 
   eventos : Evento[];
 
-  constructor(private eventoService: EventoService){}
+  constructor(private eventoService: EventoService, public auth: AuthService){}
 
   ngOnInit():void {
+    this.cargarEventos();
+  }
+
+  cargarEventos(): void{
     this.eventoService.getEventos().subscribe(
       p => this.eventos = p  
     );
+
   }
+
   delete(evento: Evento): void{
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {

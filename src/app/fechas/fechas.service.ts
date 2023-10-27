@@ -11,8 +11,8 @@ import { Fecha } from './fecha';
 export class FechasService {
 
   private url : string ='http://localhost:8080/fechas';
-  private urlDuelosByFecha : string ='http://localhost:8080/fechas/duelos';
-  private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
+  //private urlDuelosByFecha : string ='http://localhost:8080/fechas/duelos';
+  //private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(private http: HttpClient,
     private router: Router) { }
@@ -23,9 +23,9 @@ export class FechasService {
       );
     }
     create(fecha: Fecha) : Observable<any>{
-      return this.http.post<any>(this.url+ '/', fecha, {headers : this.httpHeaders}).pipe(
+      return this.http.post<any>(this.url+ '/', fecha).pipe(
         catchError(e =>{
-          Swal.fire('Error' ,e.error.mensaje, 'error');
+          //Swal.fire('Error' ,e.error.mensaje, 'error');
           return throwError(e);
         } )
       )
@@ -35,26 +35,26 @@ export class FechasService {
     getFecha(id): Observable<Fecha>{
       return this.http.get<Fecha>(`${this.url}/${id}`).pipe(
         catchError(e =>{
-          this.router.navigate(['/fechas']);
-          Swal.fire('Error', e.error.mensaje, 'error');
+         // this.router.navigate(['/fechas']);
+         // Swal.fire('Error', e.error.mensaje, 'error');
           return throwError(e);
         })
       )
     }
 
     updateFecha(fecha: Fecha): Observable<any>{
-      return this.http.put<any> (`${this.url}/${fecha.idFecha}`, fecha,{headers : this.httpHeaders}).pipe(
+      return this.http.put<any> (`${this.url}/${fecha.idFecha}`, fecha).pipe(
         catchError(e =>{
-          Swal.fire('Error.',e.error.mensaje, 'error');
+          //Swal.fire('Error.',e.error.mensaje, 'error');
           return throwError(e);
         } )
       )
     }
     
     delete(id:number): Observable<Fecha>{
-      return this.http.delete<Fecha>(`${this.url}/${id}`,{headers : this.httpHeaders}).pipe(
+      return this.http.delete<Fecha>(`${this.url}/${id}`).pipe(
         catchError(e =>{
-          Swal.fire('Error.' , e.error.mensaje, 'error');
+          //Swal.fire('Error.' , e.error.mensaje, 'error');
           return throwError(e);
         } )
       )
@@ -62,7 +62,7 @@ export class FechasService {
 
             // DUELOS QUE TIENE UNA FECHA
     getDuelosByFecha(id): Observable<any>{
-      return this.http.get<any>(`${this.urlDuelosByFecha}/${id}`).pipe(
+      return this.http.get<any>(`${this.url}/duelos/${id}`).pipe(
         catchError(e=>{              
         return throwError(e);
          })

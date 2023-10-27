@@ -2,13 +2,10 @@
 <div class="container">
   <div class="card  border-primary  mb-3">
     <div class="card-header">PERSONAS</div>
-    <div class="card-body text-success" >
+    <div class="card-body" >
 
 
       <div class="my-2 text-left">
-    <!--    <div style="display: inline-block; margin-right: 40px;">
-          <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Ver más datos
-        </div>-->
         <div style="display: inline-block; margin-right: 40px;">
           <input type="checkbox" [(ngModel)]="checkboxSeleccionadoG" (change)="toggleBotonesGestionar()"> Gestionar
         </div>
@@ -17,48 +14,54 @@
       
       <br>
       <div class="my-2 text-left" *ngIf="botonesHabilitadosG">
-        <button type="button" [routerLink]="['/personas/form']" class="btn btn-rounded btn-primary" >Crear Personas</button>
+        <button type="button" [routerLink]="['/personas/form']" class="btn btn-rounded btn-primary" >Crear Persona</button>
       </div>
       <div class="table-responsive">
         <div *ngIf="personas?.length==0" class="alert alert-info">
           No hay registros en la base de datos!
         </div>
-      <table class="table" *ngIf="personas?.length>0" >
+        <table class="table table-striped table-bordered" *ngIf="personas?.length>0" >
         <thead>
           <tr>
             <th>ID</th>
-            <th>NOMBRES</th>
-            <th>APELLIDOS</th>
-            <th>EMAIL</th>
-            <th>DNI</th>
-            <th>FECHA NAC.</th>
-            <th>ESTADO</th>
-            <th>USUARIO</th>
-          <!-- <th *ngIf="botonesHabilitados">PASSWORD</th>--> 
-            <th *ngIf="botonesHabilitadosG">Editar</th>
-            <th *ngIf="botonesHabilitadosG">Eliminar</th>
+            <th class="text-center">Nombres</th>
+            <th class="text-center">Apellidos</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">DNI</th>
+            <th class="text-center">Fecha Nac.</th>
+            <th class="text-center">Estado</th>
+            <th class="text-center">Usuario</th>
+            <th class="text-center" *ngIf="botonesHabilitadosG">#</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let persona of personas" >
             <td>{{persona.idPersona}}</td>
-              <td>{{persona.nombrePersona}}</td>
-              <td>{{persona.apellidosPersonas }} </td>
-              <td>{{persona.correoPersona}}</td>
-              <td>{{persona.dniPersona }} </td>
-              <td>{{persona.fechaNacPersona | date:"EEEE dd, MMM yyyy" }}</td>
-              <td>{{persona.estadoPersona === true ? 'Activo' : 'Inactivo'}}</td>
-              <td >{{persona.usuarioPersona }}</td>
+              <td class="text-center">{{persona.nombrePersona}}</td>
+              <td class="text-center">{{persona.apellidosPersonas }} </td>
+              <td class="text-center">{{persona.correoPersona}}</td>
+              <td class="text-center">{{persona.dniPersona }} </td>
+              <td class="text-center">{{persona.fechaNacPersona | date:"EEEE dd, MMM yyyy" }}</td>
+              <td class="text-center">{{persona.estadoPersona === true ? 'Activo' : 'Inactivo'}}</td>
+              <td class="text-center">{{persona.usuarioPersona }}</td>
             <!--  <td *ngIf="botonesHabilitados">{{persona.passwordPersona}}</td>-->
               
-              <td *ngIf="botonesHabilitadosG">
-                <button type="button" name="editar" [routerLink]="['/personas/form',persona.idPersona]"
-                class="btn btn-primary" >Editar</button>
+              <td class="text-center" *ngIf="botonesHabilitadosG">
+                <button type="button" name="editar" [routerLink]="['/personas/form',persona.idPersona]"   
+                class="btn btn-primary" style="margin-right: 10px;" title="Editar persona"> 
+                   <i class="fas fa-edit"></i>
+                </button>
+
+                <button type="button" name="eliminar" (click)="delete(persona)" class="btn btn-danger" 
+                style="margin-right: 10px;" title="Eliminar persona">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+                <button type="button" name="agregar" title="Asignar evento"  [routerLink]="['/personas/evento',persona.idPersona]" 
+                class="btn btn-success" style="margin-right: 10px;">
+                <i class="fas fa-plus-circle"></i>
+              </button>
               </td>
-              <td *ngIf="botonesHabilitadosG">
-                <button type="button" name="eliminar" (click)="delete(persona)"
-                class="btn btn-danger" >Eliminar</button>
-              </td>
+
           </tr>
         </tbody>
     

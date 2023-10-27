@@ -1,0 +1,16 @@
+.equipo-grupo-duelo-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.equipo-grupo-duelo {
+  text-align: center;
+  margin: 0 10px;
+}
+
+.vs-label {
+  display: inline-block;
+  margin: 0 100px; /* Espacio entre "VS" y los registros */
+  font-size: 40px;
+}

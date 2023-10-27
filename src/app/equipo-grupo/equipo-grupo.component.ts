@@ -9,6 +9,7 @@ import { Grupo } from '../grupos/grupo';
 import { ModalEstadisticaService } from './estadisticas/detalle-estadistica/modal-estadistica.service';
 import { forkJoin } from 'rxjs';
 import { EquipoEstadistica } from './estadisticas/equipo-estadistica';
+import { AuthService } from '../personas/auth.service';
 
 @Component({
   selector: 'app-equipo-grupo',
@@ -31,9 +32,13 @@ export class EquipoGrupoComponent {
   public botonesHabilitados: boolean = false;
 
 
-  constructor(private equipoGrupoService: EquipoGrupoService, private faseService: FasesService,
-     private route: ActivatedRoute, private grupoService: GrupoService, 
-     private estadisticaService: ModalEstadisticaService){}
+  constructor(
+    private equipoGrupoService: EquipoGrupoService, 
+    private faseService: FasesService,
+    private route: ActivatedRoute, 
+    private grupoService: GrupoService,
+    private estadisticaService: ModalEstadisticaService,
+    public auth: AuthService){}
 
   ngOnInit(): void {
 

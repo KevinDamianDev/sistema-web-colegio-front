@@ -9,6 +9,7 @@ import { EventoService } from '../evento/evento.service';
 import { Evento } from '../evento/evento';
 import { Equipo } from '../equipos/equipo';
 import { EquipoService } from '../equipos/equipo.service';
+import { AuthService } from '../personas/auth.service';
 @Component({
   selector: 'app-jugadores',
   templateUrl: './jugadores.component.html'
@@ -31,9 +32,13 @@ export class JugadoresComponent {
   public checkboxSeleccionado: boolean = false;
   public botonesHabilitados: boolean = false;
 
-  constructor(private jugadorService: JugadorService,
-    private modalService: ModalJugadorServiceService, private activate: ActivatedRoute,
-    private eventoService: EventoService, private equipoService: EquipoService){}
+  constructor(
+    private jugadorService: JugadorService,
+    private modalService: ModalJugadorServiceService, 
+    private activate: ActivatedRoute,
+    private eventoService: EventoService, 
+    private equipoService: EquipoService,
+    public auth: AuthService){}
 
 
     ngOnInit():void {

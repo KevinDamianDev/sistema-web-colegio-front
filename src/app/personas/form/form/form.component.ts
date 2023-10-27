@@ -3,6 +3,7 @@ import { Persona } from '../../persona';
 import { PersonaService } from '../../persona.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Rol } from '../../rol';
 
 @Component({
   selector: 'app-form',
@@ -12,48 +13,102 @@ export class FormComponent {
   titulo: string = 'Registro de personas.'
   public persona: Persona = new Persona();
 
-  constructor(private personaService: PersonaService,
-      private router: Router,
-      private activate: ActivatedRoute){}
+  constructor(
+    private personaService: PersonaService,
+    private router: Router,
+    private activate: ActivatedRoute) { }
 
-      ngOnInit(): void {
-        this.cargarPersona();
-        
-      }
+  ngOnInit(): void {
+    this.cargarPersona();
 
+  }
 
-      
-cargarPersona():void{
-  this.activate.params.subscribe(params =>{
-    var id =  params['id']
-    if(id){
-      this.personaService.getPersona(id).subscribe(
-        (persona) => {
-          this.persona = persona;
-          //this.persona.estadoPersona = persona.estadoPersona === 1 ? true : false;
+  public roles: Rol[] = [
+    { idRol: 1, nombreRoles: 'ROLE_ADMIN' },
+    { idRol: 2, nombreRoles: 'ROLE_USER' },
+  ];
 
-        })
-      }
-  })
-}
-  public create(): void{
-    this.personaService.create(this.persona).subscribe(
-      json =>{
-        this.router.navigate(['/personas'])
-        Swal.fire('Nueva Persona', `La persona  ${json.persona.nombrePersona} ${json.persona.apellidosPersonas} ha sido creado con éxito! `, 'success')
-      } 
-    )
+  create(): void {
+    const personaParaEnviar = {
+      nombrePersona: this.persona.nombrePersona,
+      apellidosPersonas: this.persona.apellidosPersonas,
+      dniPersona: this.persona.dniPersona,
+      fechaNacPersona: this.persona.fechaNacPersona,
+      correoPersona: this.persona.correoPersona,
+      usuarioPersona: this.persona.usuarioPersona,
+      passwordPersona: this.persona.passwordPersona,
+      estadoPersona: this.persona.estadoPersona,
+      roles: this.persona.rolesSeleccionados.map((idRol) => {
+        return { idRol };
+      }),
+    };
+    //console.log('this.personaParaEnviar::: --> ', JSON.stringify(personaParaEnviar, null, 2));
+    this.personaService.create(personaParaEnviar).subscribe((json) => {
+      this.router.navigate(['/personas']);
+      Swal.fire(
+        'Nueva Persona',
+        `La persona ${json.persona.nombrePersona} ${json.persona.apellidosPersonas} ha sido creada con éxito!`,
+        'success'
+      );
+    });
+  }
+
+  public update(): void {
+    // Formatea los roles seleccionados antes de actualizar la persona
+    const personaParaActualizar = {
+      idPersona: this.persona.idPersona,
+      nombrePersona: this.persona.nombrePersona,
+      apellidosPersonas: this.persona.apellidosPersonas,
+      dniPersona: this.persona.dniPersona,
+      fechaNacPersona: this.persona.fechaNacPersona,
+      correoPersona: this.persona.correoPersona,
+      usuarioPersona: this.persona.usuarioPersona,
+      passwordPersona: this.persona.passwordPersona,
+      estadoPersona: this.persona.estadoPersona,
+      roles: this.persona.rolesSeleccionados.map((idRol) => {
+        return { idRol }; // Debes llenar el nombreRoles apropiadamente
+      }),
+    };
+    //console.log('this.personaParaActualizar::: --> ', JSON.stringify(personaParaActualizar, null, 2));
+    this.personaService.updatePersona(personaParaActualizar).subscribe((p) => {
+      this.router.navigate(['/personas']);
+      Swal.fire(
+        'Persona actualizada',
+        `La persona ${p.persona.nombrePersona} ${p.persona.apellidosPersonas} ha sido actualizada con éxito!`,
+        'success'
+      );
+    });
   }
 
 
-  update(): void{
-    this.personaService.updatePersona(this.persona)
-    .subscribe(p =>{
-      this.router.navigate(['/personas'])
-      Swal.fire('Persona actualizada', `La persona  ${p.persona.nombrePersona} ${p.persona.apellidosPersonas} ha sido actualizado con éxito! `, 'success')
+  cargarPersona(): void {
+    this.activate.params.subscribe((params) => {
+      var id = params['id'];
+      if (id) {
+        this.personaService.getPersona(id).subscribe((persona) => {
+          this.persona = persona;
+          //console.log('this.persona carga::: --> ', JSON.stringify(this.persona, null, 2));
+          // Inicializa persona.rolesSeleccionados como un arreglo vacío por defecto
+          this.persona.rolesSeleccionados = this.persona.rolesSeleccionados || [];
 
+          // Sincroniza los roles seleccionados con los roles de la persona
+          this.roles.forEach((rol) => {
+            if (this.persona.roles.some((selectedRol) => selectedRol.idRol === rol.idRol)) {
+              // Si el rol está en los roles de la persona, marca el checkbox
+              this.persona.rolesSeleccionados.push(rol.idRol);
+            }
+          });
+        });
+      }
+    });
+  }
+
+
+  toggleRol(idRol: number): void {
+    if (this.persona.rolesSeleccionados.includes(idRol)) {
+      this.persona.rolesSeleccionados = this.persona.rolesSeleccionados.filter((id) => id !== idRol);
+    } else {
+      this.persona.rolesSeleccionados.push(idRol);
     }
- ) }
-
-
+  }
 }

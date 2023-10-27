@@ -1,0 +1,151 @@
+
+<br>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div  class="alert alert-primary"
+          style="text-align: center; display: flex; justify-content: center; align-items: center;">
+          {{nombreDuelo}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div style="text-align: center;">
+            <ng-container *ngFor="let equipoGrupoDuelo of equipoGrupoDuelos; let i = index">
+
+              <div style="display: inline-block; margin: 0 10px;">
+
+
+
+                <img *ngIf="equipoGrupoDuelo.equipoGrupo.equipo?.foto" src="http://localhost:8080/equipos/uploads/img/{{equipoGrupoDuelo.equipoGrupo.equipo.foto}}" class="card-img-top img-thumbnail rounded" style="width: 150px; height: 150px;">
+                <img *ngIf="!equipoGrupoDuelo.equipoGrupo.equipo?.foto" src="http://localhost:8080/images/no_equipo.png" alt="Sin foto" class="card-img-top img-thumbnail rounded" style="width: 150px; height: 150px;">
+                <p style="white-space: nowrap;  font-size: 20px">{{ equipoGrupoDuelo.equipoGrupo.equipo.nombreEquipo }}</p>
+                <br>
+                <div>
+                    <button type="button" class="btn btn-rounded btn-primary"
+                      [routerLink]="['/gol/form',{idDuelo: idDuelo, idEquipo: equipoGrupoDuelo.equipoGrupo.equipo.idEquipo }]" 
+                      title="Añadir marcador">Añadir Marcador
+                    </button>
+                </div>
+                  <br>
+              </div>
+              <ng-container *ngIf="i < equipoGrupoDuelos.length - 1">
+                <p class="vs-label">VS</p>
+              </ng-container>
+            </ng-container>
+          </div>
+          
+
+
+              <div class="container">
+                  <div class="row">
+                    <div class="col-md-6" *ngFor="let equipo of agruparGolesPorEquipo() | keyvalue"> 
+                      <div class="card mb-2">
+                        <div class="card-body">
+                          <p class="text-center" style="font-size: 30px;">{{ equipo.value.cantidadGoles }}</p>
+                        </div>
+                      </div>
+                
+                      <ng-container *ngIf="equipo.value.goles.length > 0">
+                        <div class="text-center"  style="font-size: 15px; margin-top: 10px;" 
+                         *ngFor="let gol of equipo.value.goles">
+
+                         Minuto: {{ gol.minutoGol }}, Jugador: {{ gol.nombreJugador }}
+                        <br>
+                          <div style="margin-top: 10px;" >
+                            <button type="button" name="editar" title="Editar marcador"  class="btn btn-success"
+                            [routerLink]="['/gol/form',gol.idGol, {idDuelo: idDuelo, idEquipo: gol.idEquipo }]"style="margin-right: 10px;">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button type="button" name="eliminar" title="Eliminar marcador" (click)="delete(gol)"
+                            class="btn btn-danger"  style="margin-right: 10px;">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>                                          
+                        </div>
+                    </div>
+                      </ng-container>
+                
+                      <ng-container *ngIf="equipo.value.goles.length === 0">
+                        <p>No hay marcadores</p>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  
+ 
+
+
+
+  <!--
+   <div class="container">
+    <div class="card  border-primary  mb-3">
+      <div class="card-header">Goles</div>
+      <div class="card-body">
+        <div>
+            <button type="button" [routerLink]="['/gol/form',{idDuelo: idDuelo}]" class="btn btn-rounded btn-primary"
+              title="Crear duelo">Crear Gol</button>
+          </div>
+          <br>
+       <div class="my-2 text-left" *ngIf="auth.hasRole('ROLE_ADMIN') || auth.hasRole('ROLE_USER')">
+          <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
+        </div>
+        <br>
+        <div *ngIf="botonesHabilitados">
+          <button type="button" [routerLink]="['/duelos/form',{ idFecha: idFecha }]" class="btn btn-rounded btn-primary"
+            title="Crear duelo">Crear Duelo</button>
+        </div>
+        <br *ngIf="botonesHabilitados">
+        <div>
+          <table class="table table-striped table-bordered" *ngIf="!mensajeGoles">
+            <thead>
+              <tr>             
+                <th class="text-center">Equipo</th>
+                <th class="text-center">Minuto</th>
+                <th class="text-center">Jugador</th>
+                <th class="text-center">Dorsal</th>
+                <th class="text-center">Detalle</th>             
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let gol of goles">
+                <td class="text-center">{{ gol.equipoJugador.equipo.nombreEquipo }}</td>
+                <td class="text-center">{{ gol.minutoGol }} </td>
+                <td class="text-center">{{ gol.equipoJugador.jugador.nombreJugador }}</td>
+                <td class="text-center">{{ gol.equipoJugador.jugador.dorsalJugador }}</td>
+                
+                <td class="text-center" >
+                    <button type="button" name="editar" title="Editar datos del duelo"
+                    [routerLink]="['/duelos/form',duelo.idDuelo,{ idFecha: idFecha }]" class="btn btn-primary"
+                    style="margin-right: 10px;">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button type="button" name="eliminar" title="Eliminar duelo" (click)="delete(gol)"
+                    class="btn btn-danger"  style="margin-right: 10px;">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>                                          
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="mensajeGoles">
+          <div class="alert alert-info">
+            {{mensajeGoles}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+-->

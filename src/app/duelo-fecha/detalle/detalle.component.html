@@ -1,0 +1,63 @@
+<div class="abrir-modal" *ngIf="modalService.modal">
+    <div  class="modal" style="display: block;" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <br>
+          <div class="modal-header">
+            <h5 class="modal-title">{{titulo}}</h5>
+            <button (click)="cerrarModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+
+                  <div style="text-align: center;">
+                    <ng-container *ngFor="let equipoGrupoDuelo of equipoGrupoDuelos; let i = index">
+
+                      <div style="display: inline-block; margin: 0 10px;">
+
+
+
+                        <img *ngIf="equipoGrupoDuelo.equipoGrupo.equipo?.foto" src="http://localhost:8080/equipos/uploads/img/{{equipoGrupoDuelo.equipoGrupo.equipo.foto}}" class="card-img-top img-thumbnail rounded" style="width: 150px; height: 150px;">
+                        <img *ngIf="!equipoGrupoDuelo.equipoGrupo.equipo?.foto" src="http://localhost:8080/images/no_equipo.png" alt="Sin foto" class="card-img-top img-thumbnail rounded" style="width: 150px; height: 150px;">
+                        <p style="white-space: nowrap;  font-size: 20px">{{ equipoGrupoDuelo.equipoGrupo.equipo.nombreEquipo }}</p>
+                      
+                      </div>
+                      <ng-container *ngIf="i < equipoGrupoDuelos.length - 1">
+                        <p style="display: inline-block; margin: 0 130px;">VS</p>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-6" *ngFor="let equipo of agruparGolesPorEquipo() | keyvalue"> 
+                        <div class="card mb-2">
+                          <div class="card-body">
+                            <p class="text-center grande">{{ equipo.value.cantidadGoles }}</p>
+                          </div>
+                        </div>
+                  
+                        <ng-container *ngIf="equipo.value.goles.length > 0">
+                          <li *ngFor="let gol of equipo.value.goles">
+                            Minuto: {{ gol.minutoGol }}, Jugador: {{ gol.nombreJugador }}
+                          </li>
+                        </ng-container>
+                  
+                        <ng-container *ngIf="equipo.value.goles.length === 0">
+                          <p>No hay marcadores.</p>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button"  (click)="cerrarModal()" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    

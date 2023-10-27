@@ -11,6 +11,7 @@ import { ModalService } from '../equipos/detalle/modal.service';
 import { EquipoService } from '../equipos/equipo.service';
 import Swal from 'sweetalert2';
 import { EventoEquipo } from '../equipos/evento-equipo';
+import { AuthService } from '../personas/auth.service';
 @Component({
   selector: 'app-detalle-evento',
   templateUrl: './detalle-evento.component.html'
@@ -30,9 +31,15 @@ export class DetalleEventoComponent {
 
   eventoEquipo:EventoEquipo;
 
-  constructor(private eventoService: EventoService,
-    private activate: ActivatedRoute, private location: Location, private modalService: ModalService,
-    private equipoService: EquipoService, private faseService: FasesService){}
+  constructor(
+    private eventoService: EventoService,
+    private activate: ActivatedRoute, 
+    private location: Location, 
+    private modalService: ModalService,
+    private equipoService: EquipoService, 
+    private faseService: FasesService,
+    public auth: AuthService){}
+
 
     // OPCIONES FASES
     public checkboxSeleccionado: boolean = false;

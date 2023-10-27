@@ -1,0 +1,43 @@
+
+  
+  <div class="card bg-secondary  text-white"  >
+    <div class="card-header" *ngIf="persona" > {{titulo}} {{persona.nombrePersona}} {{persona.apellidosPersonas}}</div>
+      <div class="card-body">
+  
+  <form #form="ngForm"> 
+
+    <div class="form-group row">
+        <label for="evento" class="col-form-label col-sm-2" >Evento:</label>
+        <div class="col-sm-6">
+            <select [compareWith]="compararEvento" class="form-control" [(ngModel)]="personaEvento.evento" name="evento" required #evento="ngModel" >
+              <option [ngValue]="undefined">--Seleccionar evento--</option>
+              <option *ngFor="let evento of eventos" [ngValue]="evento">{{evento.nombreEvento}}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="evento.invalid && (evento.dirty || evento.touched)" >
+              <div *ngIf="evento.errors.required">
+                evento es requerida.
+              </div>
+            </div>
+        </div>
+      </div>
+
+
+    <div class="form-group row" *ngIf="persona">
+      <div class="col-sm-6">
+        <button type="button" [disabled]="!form.form.valid"  class="btn btn-primary mr-3"  name="button" (click)="create(evento)">
+            Crear
+        </button>  
+        <button type="button" [routerLink]="['/personas/evento/', persona.idPersona]"  class="btn btn-danger"  name="button"  >Cancelar</button>  
+
+        <div >
+            </div>
+      
+      </div>
+    </div> 
+  </form>  
+
+</div>
+</div>
+  
+
+

@@ -25,7 +25,7 @@
         <div class="col-md-6">
             <h5>Fechas de la fase</h5>
             <div class="row">
-              <div class="my-2 text-left">
+              <div class="my-2 text-left" *ngIf="auth.hasRole('ROLE_ADMIN') || auth.hasRole('ROLE_USER')">
                 <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
               </div>
               <div class="col-md-6">
@@ -69,7 +69,7 @@
             <h5>Grupos de la fase</h5>
 
           <div class="row">
-            <div class="my-2 text-left">
+            <div class="my-2 text-left" *ngIf="auth.hasRole('ROLE_ADMIN') || auth.hasRole('ROLE_USER')">
               <input type="checkbox" [(ngModel)]="checkboxSeleccionadoGrupo" (change)="toggleBotonesGrupo()"> Opciones
             </div>
             <div class="col-md-5">

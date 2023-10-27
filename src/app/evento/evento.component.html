@@ -4,7 +4,7 @@
   <div class="card-header">EVENTOS</div>
   <div class="card-body text-success" >
 
-    <div class="my-2 text-left">
+    <div class="my-2 text-left" *ngIf="auth.hasRole('ROLE_ADMIN')">
       <button type="button" [routerLink]="['/eventos/form']" class="btn btn-rounded btn-primary" >Crear Evento</button>
     </div>
     <div class="table-responsive">
@@ -25,7 +25,7 @@
           <td>{{evento.idEvento}}</td>
             <td>{{evento.nombreEvento}}</td>
             <td>{{evento.categoria.nombreCategoria}}</td>
-            <td>
+            <td *ngIf="auth.hasRole('ROLE_ADMIN')">
               <button type="button" name="editar" [routerLink]="['/eventos/form',evento.idEvento]"
               class="btn btn-primary" >Editar</button>
             </td>
@@ -33,7 +33,7 @@
               <button type="button" name="detalle" [routerLink]="['/detalle/evento',evento.idEvento]"
               class="btn btn-success" >Detalles</button>
             </td>
-            <td>                
+            <td *ngIf="auth.hasRole('ROLE_ADMIN')">                
               <button type="button" name="eliminar" (click)="delete(evento)"
               class="btn btn-danger" >Eliminar</button>
             </td>

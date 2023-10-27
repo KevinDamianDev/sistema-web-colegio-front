@@ -23,7 +23,7 @@ export class PersonasComponent implements OnInit{
     this.personaService.getPersonas().subscribe(
       p => {
         this.personas = p;
-        console.log(' this.personas ::::'+JSON.stringify(this.personas, null, 2));
+        //console.log(' this.personas ::::'+JSON.stringify(this.personas, null, 2));
       }
       
     );

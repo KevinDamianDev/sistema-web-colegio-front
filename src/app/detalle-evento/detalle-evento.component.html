@@ -4,15 +4,25 @@
   <div class="row">
     <div class="col-md-12">
       <hr style="border-top: 2px solid #000000; margin: 10px 0;">
-      <div class="d-flex align-items-center">
+
+      <div class="d-flex align-items-center" *ngIf="auth.hasRole('ROLE_ADMIN') && auth.hasRole('ROLE_USER')" >
         <i class="fa fa-arrow-left" [routerLink]="['/eventos']" style="cursor: pointer;"></i>
         <h5 style="font-size: 15px; margin-left: 20px;">Detalle del evento</h5>
       </div>
+
+      <div class="d-flex align-items-center" *ngIf="auth.hasRole('ROLE_ADMIN') && !auth.hasRole('ROLE_USER')" >
+        <i class="fa fa-arrow-left" [routerLink]="['/eventos']" style="cursor: pointer;"></i>
+        <h5 style="font-size: 15px; margin-left: 20px;">Detalle del evento</h5>
+      </div>
+
+      <div class="d-flex align-items-center" *ngIf="!auth.hasRole('ROLE_ADMIN') && auth.hasRole('ROLE_USER')" >
+        <i class="fa fa-arrow-left" [routerLink]="['/misEventos']" style="cursor: pointer;"></i>
+        <h5 style="font-size: 15px; margin-left: 20px;">Detalle del evento</h5>
+      </div>
+
       <hr style="border-top: 2px solid #000000; margin: 5px 0;">
     </div>
   </div>
-  
-  
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-primary" style="text-align: center; display: flex; justify-content: center; align-items: center;">
@@ -21,7 +31,7 @@
 
       <h5>Fases del evento:</h5>
       <div class="row">
-        <div class="my-2 text-left">
+        <div *ngIf="auth.hasRole('ROLE_ADMIN') || auth.hasRole('ROLE_USER')" class="my-2 text-left">
           <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
         </div>
         <div class="col-md-4">
@@ -46,7 +56,8 @@
               <button *ngIf="botonesHabilitados" type="button" name="editar" [routerLink]="['/fases/form', fase.idFase,{ idEvento: evento.idEvento }]" class="btn btn-primary mr-2 mb-3">
                 <i class="fas fa-edit"></i>
               </button>
-              <button *ngIf="botonesHabilitados" type="button" name="eliminarFase" (click)="delete(fase)" class="btn btn-danger mb-3">
+              <button *ngIf="botonesHabilitados" type="button" name="eliminarFase" (click)="delete(fase)"
+               class="btn btn-danger mb-3">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </div>
@@ -62,7 +73,7 @@
 
       <h5>Equipos del evento:</h5>
       <div class="row">
-        <div class="my-2 text-left">
+        <div class="my-2 text-left" *ngIf="auth.hasRole('ROLE_ADMIN') || auth.hasRole('ROLE_USER')">
           <input type="checkbox" [(ngModel)]="checkboxSeleccionadoEquipo" (change)="toggleBotonesEquipo()"> Opciones
         </div>
         <div class="col-md-4">

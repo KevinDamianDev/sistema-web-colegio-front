@@ -9,7 +9,7 @@ import { BreadComponent } from './shared/bread/bread.component';
 import { PersonasComponent } from './personas/personas.component';
 import { PersonaService } from './personas/persona.service';
 import { RouterModule, Routes } from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { FormComponent } from './personas/form/form/form.component';
 import { FormsModule } from '@angular/forms';
 import localeEs from  '@angular/common/locales/es-PE';
@@ -51,7 +51,15 @@ import { NgPipesModule } from 'ngx-pipes';
 import { DetalleEstadisticaComponent } from './equipo-grupo/estadisticas/detalle-estadistica/detalle-estadistica.component';
 import { ModalEstadisticaService } from './equipo-grupo/estadisticas/detalle-estadistica/modal-estadistica.service';
 import { LoginComponent } from './personas/login.component';
-
+import { Token } from './personas/interceptors/token';
+import { Auth } from './personas/interceptors/auth';
+import { MisEventosComponent } from './evento/mis-eventos/mis-eventos.component';
+import { DetalleComponentDuelo } from './duelo-fecha/detalle/detalle.component.duelo';
+import { FormGolComponent } from './duelo-fecha/goles/form-gol/form-gol.component';
+import { FormularioGolComponent } from './duelo-fecha/goles/form/formulario-gol/formulario-gol.component';
+import { EventoPersonaComponent } from './evento-persona/evento-persona.component';
+import { EventoPersonaServiceService } from './evento-persona/evento-persona-service.service';
+import { FormEventoPersonaComponent } from './evento-persona/form/form-evento-persona/form-evento-persona.component';
 
   registerLocaleData(localeEs, 'es');
 const routes: Routes= [
@@ -106,6 +114,17 @@ const routes: Routes= [
  {path: 'estadisticaEquipo/:id', component: DetalleEstadisticaComponent},
 
  {path: 'login', component: LoginComponent},
+
+ {path: 'misEventos', component: MisEventosComponent},
+
+ {path: 'gol', component: FormGolComponent},
+
+ {path: 'gol/form', component: FormularioGolComponent},
+ {path: 'gol/form/:id', component: FormularioGolComponent},
+
+ {path: 'personas/evento/:id', component: EventoPersonaComponent},
+
+ {path: 'personas/evento/form/:id', component: FormEventoPersonaComponent}
 ]
 
 @NgModule({
@@ -141,7 +160,13 @@ const routes: Routes= [
     AsignarEquiposComponent,
     DueloFechaComponent,
     DetalleEstadisticaComponent,
-    LoginComponent
+    LoginComponent,
+    MisEventosComponent,
+    DetalleComponentDuelo,
+    FormGolComponent,
+    FormularioGolComponent,
+    EventoPersonaComponent,
+    FormEventoPersonaComponent
   ],
   imports: [
     BrowserModule,
@@ -153,7 +178,9 @@ const routes: Routes= [
   providers: [PersonaService, CategoriaService, EquipoService, JugadorService, 
     EventoService, FasesService, FechasService, GrupoService,
     DueloService, EquipoGrupoService, AsignarEquipoGrupoService,
-    ModalEstadisticaService, {provide: LOCALE_ID, useValue: 'es' },],
+    ModalEstadisticaService, EventoPersonaServiceService, {provide: LOCALE_ID, useValue: 'es' },
+    {provide: HTTP_INTERCEPTORS, useClass: Token, multi: true} ,
+    {provide: HTTP_INTERCEPTORS, useClass: Auth, multi: true}  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
