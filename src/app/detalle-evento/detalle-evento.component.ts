@@ -12,6 +12,7 @@ import { EquipoService } from '../equipos/equipo.service';
 import Swal from 'sweetalert2';
 import { EventoEquipo } from '../equipos/evento-equipo';
 import { AuthService } from '../personas/auth.service';
+import { Goles } from '../duelo-fecha/detalle/goles';
 @Component({
   selector: 'app-detalle-evento',
   templateUrl: './detalle-evento.component.html'
@@ -24,6 +25,9 @@ export class DetalleEventoComponent {
   errores : string;
   equipos: Equipo[];
   erroresEquipo : string;
+
+  goles: Goles[];
+  mensajeGoles: string;
 
   // VARIABLES EQUIPO
 
@@ -49,8 +53,13 @@ export class DetalleEventoComponent {
     public checkboxSeleccionadoEquipo: boolean = false;
     public botonesHabilitadosEquipo: boolean = false;
 
+
+    jugadoresConGoles: any[] = []; // Asigna aquí la lista de jugadores con goles
+    equiposConGoles: any[] = [];
+
   ngOnInit(): void {
     this.cargarEvento();
+    this.cargarGolesByEvento();
 
     this.modalService.notifica.subscribe(e =>{
       this.equipos = this.equipos.map(eO =>{
@@ -63,6 +72,7 @@ export class DetalleEventoComponent {
 
   }
 
+  
   cargarEvento(): void {
     this.activate.params.subscribe((params) => {
       const id = params['id'];
@@ -184,5 +194,156 @@ delete(fase: Fase): void{
     }
   });
 }
+
+
+cargarGolesByEvento(): void {
+  this.activate.params.subscribe((params) => {
+    const id = params['id'];
+    if (id) {
+      // CARGA DATA DE EVENTO
+      this.eventoService.getGolesByEvento(id).subscribe({
+      next : (value : any) =>{
+        this.goles = value;
+        //console.log('this.goles::: --> ', JSON.stringify(this.goles, null, 2));
+        this.jugadoresConGoles = this.agruparPorJugador();
+        this.equiposConGoles = this.agruparPorEquipo();
+      },
+      error : (error: any)=>{
+        this.mensajeGoles = error.error.mensaje;
+      }
+      });     
+     }
+  });
+}
+
+agruparPorEquipo(): any[] {
+  if (this.goles && this.goles.length > 0) {
+    const equiposMap = new Map<number, any>();
+
+    this.goles.forEach((gol) => {
+      const equipo = gol.equipoJugador.equipo;
+
+      if (equiposMap.has(equipo.idEquipo)) {
+        equiposMap.get(equipo.idEquipo).cantidadGoles++;
+      } else {
+        equiposMap.set(equipo.idEquipo, {
+          idEquipo: equipo.idEquipo,
+          nombreEquipo: equipo.nombreEquipo,
+          cantidadGoles: 1,
+        });
+      }
+    });
+
+    const equiposAgrupados = Array.from(equiposMap.values());
+    equiposAgrupados.sort((a, b) => b.cantidadGoles - a.cantidadGoles);
+
+    return equiposAgrupados;
+  } else {
+    console.error('No hay datos de goles disponibles.');
+    return [];
+  }
+}
+
+
+agruparPorJugador(): any[] {
+  if (this.goles && this.goles.length > 0) {
+    const jugadoresMap = new Map<number, any>();
+
+    this.goles.forEach((gol) => {
+      const jugador = gol.equipoJugador.jugador;
+      const equipo = gol.equipoJugador.equipo.nombreEquipo;
+
+      if (jugadoresMap.has(jugador.idJugador)) {
+        jugadoresMap.get(jugador.idJugador).cantidadGoles++;
+      } else {
+        jugadoresMap.set(jugador.idJugador, {
+          idJugador: jugador.idJugador,
+          nombreJugador: jugador.nombreJugador,
+          equipo: equipo,
+          cantidadGoles: 1,
+        });
+      }
+    });
+
+    const jugadoresAgrupados = Array.from(jugadoresMap.values());
+    jugadoresAgrupados.sort((a, b) => b.cantidadGoles - a.cantidadGoles);
+
+    return jugadoresAgrupados;
+  } else {
+    console.error('No hay datos de goles disponibles.');
+    return [];
+  }
+}
+
+/*
+
+// Suponiendo que 'this.goles' contiene los datos de los goles
+agruparPorJugador(): any[] {
+
+  if (this.goles && this.goles.length > 0) {
+    // Resto del código para agrupar los goles por jugador
+
+    const jugadoresMap = new Map<number, any[]>();
+
+    this.goles.forEach((gol) => {
+      const jugador = gol.equipoJugador.jugador;
+      const equipo = gol.equipoJugador.equipo.nombreEquipo;
+  
+      if (jugadoresMap.has(jugador.idJugador)) {
+        const jugadorExistente = jugadoresMap.get(jugador.idJugador);
+        if (jugadorExistente) {
+          jugadorExistente.push({
+            idJugador: jugador.idJugador,
+            nombreJugador: jugador.nombreJugador,
+            equipo: equipo,
+          });
+        }
+      } else {
+        jugadoresMap.set(jugador.idJugador, [{
+          idJugador: jugador.idJugador,
+          nombreJugador: jugador.nombreJugador,
+          equipo: equipo,
+        }]);
+      }
+    });
+  
+    // Convertir el mapa de jugadores a una matriz de objetos
+    const jugadoresAgrupados: any[] = [];
+    jugadoresMap.forEach((value) => {
+      const cantidadGoles = value.length;
+      const jugador = value[0];
+      jugador.cantidadGoles = cantidadGoles;
+      jugadoresAgrupados.push(jugador);
+    });
+  
+    // Ordenar por la cantidad de goles (opcional)
+    jugadoresAgrupados.sort((a, b) => b.cantidadGoles - a.cantidadGoles);
+  
+    return jugadoresAgrupados;
+
+  } else {
+    // Manejo si this.goles es indefinido o vacío
+    console.error('No hay datos de goles disponibles.');
+    return [];
+  }
+
+ 
+  
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

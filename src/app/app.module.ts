@@ -97,7 +97,7 @@ const routes: Routes= [
  {path: 'grupos/form', component: FormGrupoComponent},
  {path: 'grupos/form/:id', component: FormGrupoComponent},
 
- {path: 'duelos', component: DuelosComponent},
+ //{path: 'duelos', component: DuelosComponent},
  {path: 'duelos/form', component: FormDueloComponent},
  {path: 'duelos/form/:id', component: FormDueloComponent},
 

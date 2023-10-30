@@ -3,6 +3,7 @@ import { Categoria } from '../../categoria';
 import { CategoriaService } from '../../categoria.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/personas/auth.service';
 
 @Component({
   selector: 'app-categoria-form',
@@ -16,7 +17,8 @@ export class CategoriaFormComponent {
 
   constructor(private categoriaService: CategoriaService,
     private router: Router,
-    private activate: ActivatedRoute){}
+    private activate: ActivatedRoute,
+    public auth: AuthService){}
 
     ngOnInit(): void {
       this.cargarCategoria();

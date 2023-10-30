@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
   templateUrl: './duelos.component.html'
 })
 export class DuelosComponent {
-  duelos : Duelo[];
+  /*duelos : Duelo[];
 
   constructor(private dueloService: DueloService){}
   ngOnInit():void {
@@ -47,5 +47,5 @@ export class DuelosComponent {
   
       }
     });
-  }
+  }*/
 }
