@@ -72,7 +72,7 @@ const routes: Routes= [
   {path: 'categorias/form', component: CategoriaFormComponent},
   {path: 'categorias/form/:id', component: CategoriaFormComponent},
 
-  {path: 'equipos', component: EquiposComponent},
+  //{path: 'equipos', component: EquiposComponent},
   {path: 'equipos/form', component: EquipoFormComponent},
   {path: 'equipos/form/:id', component: EquipoFormComponent},
  // {path: 'equipos/ver/:id', component: DetalleComponent},
@@ -85,15 +85,15 @@ const routes: Routes= [
  {path: 'eventos/form', component: EventoFormComponent},
  {path: 'eventos/form/:id', component: EventoFormComponent},
 
- {path: 'fases', component: FasesComponent},
+ //{path: 'fases', component: FasesComponent},
  {path: 'fases/form', component: FaseFormComponent},
  {path: 'fases/form/:id', component: FaseFormComponent},
 
- {path: 'fechas', component: FechasComponent},
+ //{path: 'fechas', component: FechasComponent},
  {path: 'fechas/form', component: FechaFormComponent},
  {path: 'fechas/form/:id', component: FechaFormComponent},
 
- {path: 'grupos', component: GruposComponent},
+ //{path: 'grupos', component: GruposComponent},
  {path: 'grupos/form', component: FormGrupoComponent},
  {path: 'grupos/form/:id', component: FormGrupoComponent},
 

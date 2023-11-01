@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
     constructor(public auth: AuthService, private router: Router){}
 
     logout(): void{
-      Swal.fire('Logout', `Hola ${this.auth.usuario.nombrePersona}, has cerrado sesion con exito..!`, 'success');
+      Swal.fire('Logout', `Has cerrado sesión con éxito..!`, 'success');
       this.auth.logout();
       this.router.navigate(['/login'])
     }
