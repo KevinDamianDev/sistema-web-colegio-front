@@ -9,15 +9,48 @@ import Swal from 'sweetalert2';
 })
 export class CategoriasComponent {
 
-  categorias : Categoria[];
+  categorias: Categoria[] = [];
+
+  paginatedCategorias: Categoria[] = [];
+  currentPage = 1;
+  itemsPerPage = 5;
+  ceil = Math.ceil;
+
+  searchTerm: string = '';
+
 
   constructor(private categoriaService: CategoriaService){}
 
-
-  ngOnInit():void {
+  ngOnInit(): void {
     this.categoriaService.getCategorias().subscribe(
-      p => this.categorias = p  
+      categorias => {
+        this.categorias = categorias;
+        this.updatePaginatedCategorias();
+      }
     );
+  }
+
+  search(): void {
+    this.updatePaginatedCategorias();
+  }
+
+  updatePaginatedCategorias() {
+    let filteredCategorias = this.categorias;
+    if (this.searchTerm) {
+      filteredCategorias = this.categorias.filter(categoria =>
+        categoria.nombreCategoria.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+  
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, filteredCategorias.length);
+    this.paginatedCategorias = filteredCategorias.slice(startIndex, endIndex);
+  }
+  
+
+  changePage(newPage: number) {
+    this.currentPage = newPage;
+    this.updatePaginatedCategorias();
   }
 
   

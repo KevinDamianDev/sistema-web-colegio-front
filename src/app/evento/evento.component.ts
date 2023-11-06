@@ -10,19 +10,51 @@ import { AuthService } from '../personas/auth.service';
 })
 export class EventoComponent {
 
-  eventos : Evento[];
+  eventos : Evento[]= [];
+
+  paginatedEventos: Evento[] = [];
+  currentPage = 1;
+  itemsPerPage = 5;
+  ceil = Math.ceil;
+  searchTerm: string = '';
 
   constructor(private eventoService: EventoService, public auth: AuthService){}
 
   ngOnInit():void {
     this.cargarEventos();
+  
+  }
+  search(): void {
+    this.updatePaginatedEventos();
   }
 
   cargarEventos(): void{
     this.eventoService.getEventos().subscribe(
-      p => this.eventos = p  
+      p =>{
+        this.eventos = p;    
+        this.updatePaginatedEventos();
+      }
     );
+   
+  }
 
+
+  updatePaginatedEventos() {
+    let filteredEventos = this.eventos;
+    if (this.searchTerm) {
+      filteredEventos = this.eventos.filter(evento =>
+        evento.nombreEvento.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+  
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, filteredEventos.length);
+    this.paginatedEventos = filteredEventos.slice(startIndex, endIndex);
+  }
+
+  changePage(newPage: number) {
+    this.currentPage = newPage;
+    this.updatePaginatedEventos();
   }
 
   delete(evento: Evento): void{
