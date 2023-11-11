@@ -14,9 +14,10 @@
       <div class="image">
         <img src="../../../assets/dist/img/usuario.png" class="img-circle elevation-2" alt="User Image">
       </div>
-      <p class="info" *ngIf="auth.isAuthenticated()" >
-        <span  class="brand-link">{{auth.usuario.nombrePersona}} {{auth.usuario.apellidosPersonas}}</span>
-      </p>
+      <p class="info" *ngIf="auth.isAuthenticated()">
+        <span class="brand-link" style="font-size: medium;">{{auth.usuario.nombrePersona}}</span>
+    </p>
+    
       <div class="info" *ngIf="!auth.isAuthenticated()" >
         <p class="brand-link">Invitado</p>
       </div>
