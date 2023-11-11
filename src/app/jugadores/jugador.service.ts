@@ -25,7 +25,7 @@ export class JugadorService {
     create(jugador: Jugador) : Observable<any>{
       return this.http.post<any>(this.url+ '/', jugador).pipe(
         catchError(e =>{
-         // Swal.fire('Error',e.error.mensaje, 'error');
+          Swal.fire('Error',e.error.mensaje, 'error');
           return throwError(e);
         } )
       )

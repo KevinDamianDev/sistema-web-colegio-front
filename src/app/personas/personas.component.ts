@@ -10,7 +10,13 @@ import Swal from 'sweetalert2';
 })
 export class PersonasComponent implements OnInit{
 
-  personas: Persona[];
+  personas: Persona[] = [];
+
+  paginatedPersonas: Persona[] = [];
+  currentPage = 1;
+  itemsPerPage = 5;
+  ceil = Math.ceil;
+  searchTerm: string = '';
 
   constructor(private personaService: PersonaService){}
 
@@ -20,14 +26,39 @@ export class PersonasComponent implements OnInit{
   public botonesHabilitadosG: boolean = false;
 
   ngOnInit():void {
+    this.cargarPersonas();
+  }
+
+  cargarPersonas(): void{
     this.personaService.getPersonas().subscribe(
       p => {
         this.personas = p;
-        //console.log(' this.personas ::::'+JSON.stringify(this.personas, null, 2));
-      }
-      
+        this.updatePaginatedPersonas();
+      }    
     );
   }
+  updatePaginatedPersonas() {
+    let filteredPersonas = this.personas;
+    if (this.searchTerm) {
+      filteredPersonas = this.personas.filter(persona =>
+        persona.apellidosPersonas.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, filteredPersonas.length);
+    this.paginatedPersonas = filteredPersonas.slice(startIndex, endIndex);
+  }
+  changePage(newPage: number) {
+    this.currentPage = newPage;
+    this.updatePaginatedPersonas();
+  }
+
+
+  search(): void {
+    this.updatePaginatedPersonas();
+  }
+
+
 
   delete(persona: Persona): void{
     const swalWithBootstrapButtons = Swal.mixin({

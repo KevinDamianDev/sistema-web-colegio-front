@@ -65,10 +65,6 @@ export class JugadorFormComponent {
       this.jugadorService.create(this.jugador).subscribe(
         json =>{
           this.jugadorCreado = json.jugador;
-          console.log('this.jugador:: --> ', JSON.stringify(this.jugador,
-            null, 2));
-            console.log('this.jugadorCreado::: --> ', JSON.stringify(this.jugadorCreado,
-               null, 2));
                this.createEquipoJugador();
          // this.router.navigate(['/jugadores'])
           //Swal.fire('Nuevo Jugador', `Jugador  ${json.jugador.nombreJugador} ha sido creado con éxito! `, 'success')
@@ -81,7 +77,7 @@ export class JugadorFormComponent {
 
       this.equipoJugadorNuevo.equipo = this.equipo;
       this.equipoJugadorNuevo.jugador = this.jugadorCreado;
-      console.log('this.equipoJugadorNuevo::: --> ', JSON.stringify(this.equipoJugadorNuevo,     null, 2));
+     // console.log('this.equipoJugadorNuevo::: --> ', JSON.stringify(this.equipoJugadorNuevo,     null, 2));
 
       this.jugadorService.createEquipoJugador(this.equipoJugadorNuevo).subscribe(
         (j) =>{

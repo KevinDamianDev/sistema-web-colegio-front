@@ -23,7 +23,7 @@
 <div class="container">
   <div class="card  border-primary  mb-3">
     <div class="card-header">JUGADORES</div>
-    <div class="card-body text-success" >
+    <div class="card-body" >
       <div class="my-2 text-left" *ngIf="auth.hasRole('ROLE_ADMIN') || auth.hasRole('ROLE_USER')">
         <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
       </div>
