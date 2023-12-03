@@ -4,6 +4,7 @@ import { PersonaService } from '../../persona.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Rol } from '../../rol';
+import { Mail } from '../../mail';
 
 @Component({
   selector: 'app-form',
@@ -12,6 +13,8 @@ import { Rol } from '../../rol';
 export class FormComponent {
   titulo: string = 'Registro de personas.'
   public persona: Persona = new Persona();
+  cargando: boolean = false;
+  public correo: Mail = new Mail();
 
   constructor(
     private personaService: PersonaService,
@@ -45,6 +48,7 @@ export class FormComponent {
     //console.log('this.personaParaEnviar::: --> ', JSON.stringify(personaParaEnviar, null, 2));
     this.personaService.create(personaParaEnviar).subscribe((json) => {
       this.router.navigate(['/personas']);
+      this.enviarEmail();
       Swal.fire(
         'Nueva Persona',
         `La persona ${json.persona.nombrePersona} ${json.persona.apellidosPersonas} ha sido creada con éxito!`,
@@ -52,6 +56,10 @@ export class FormComponent {
       );
     });
   }
+
+
+
+
 
   public update(): void {
     // Formatea los roles seleccionados antes de actualizar la persona
@@ -110,5 +118,55 @@ export class FormComponent {
     } else {
       this.persona.rolesSeleccionados.push(idRol);
     }
+  }
+
+
+  enviarEmail(): void{
+    this.cargando = true; // Activar el spinner
+
+    this.correo.email = this.persona.correoPersona;
+    this.correo.nombreUsuario = this.persona.nombrePersona;
+    this.correo.usuario= this.persona.usuarioPersona;
+    this.correo.password= this.persona.passwordPersona;
+    
+   // Desactivar el spinner
+   /* this.personaService.enviarEmailCredenciales(this.correo).subscribe((json) => {
+      Swal.fire(
+        'Credenciales enviadas',
+        `Se enviaron las credenciales a la persona exitosamente!`,
+        'success'
+      );
+     
+
+    });*/
+
+    console.log('email' + this.correo.email )
+    console.log('nombreUsuario' + this.correo.nombreUsuario )
+    console.log('usuario' + this.correo.usuario )
+    console.log('password' + this.correo.password )
+
+    this.personaService.enviarEmailCredenciales(this.correo).subscribe(
+      (json) => {
+        // Manejo del caso exitoso
+        Swal.fire(
+          'Credenciales enviadas',
+          `Se enviaron las credenciales a la persona exitosamente!`,
+          'success'
+        ).then((result) => {
+          if (result.value) {
+            this.cargando = false;
+            //this.router.navigate(['/personas']); // Navegar a otra ruta si es necesario
+          }
+        });
+      },
+      (error) => {
+        // Manejo del error
+        this.cargando = false;
+        Swal.fire('Error', error.error.error, 'error');
+
+      }
+    );
+    
+
   }
 }

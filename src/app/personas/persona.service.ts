@@ -15,6 +15,7 @@ export class PersonaService {
 
   private urlRol : string ='http://localhost:8080/roles';
   //private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
+  private urlEnvioEmail : string ='http://localhost:8080/mail/';
 
   constructor( private http: HttpClient, 
     private router: Router) { }
@@ -43,7 +44,7 @@ export class PersonaService {
     return this.http.post<any>(this.url+ '/', persona)
     .pipe(
       catchError(e =>{
-        //Swal.fire(e.error.mensaje, e.error.error, 'error');
+        Swal.fire(e.error.mensaje, 'Por favor, revisar la información ingresada', 'error');
         return throwError(e);
       } )
     )
@@ -107,6 +108,17 @@ export class PersonaService {
 
 getRoles(): Observable<Rol[]> {
   return this.http.get<Rol[]>(this.urlRol + '/')
+}
+
+enviarEmailCredenciales(mail: any) : Observable<any>{
+  
+  return this.http.post<any>(this.urlEnvioEmail, mail);
+ /* .pipe(
+    catchError(e =>{
+      Swal.fire('Error', e.error.error, 'error')
+      return throwError(e);
+    } )
+  )*/
 }
 
 }

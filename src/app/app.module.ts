@@ -60,6 +60,8 @@ import { FormularioGolComponent } from './duelo-fecha/goles/form/formulario-gol/
 import { EventoPersonaComponent } from './evento-persona/evento-persona.component';
 import { EventoPersonaServiceService } from './evento-persona/evento-persona-service.service';
 import { FormEventoPersonaComponent } from './evento-persona/form/form-evento-persona/form-evento-persona.component';
+import { ReportesService } from './reportes/reportes.service';
+import { ReportesComponent } from './reportes/reportes.component';
 
   registerLocaleData(localeEs, 'es');
 const routes: Routes= [
@@ -124,7 +126,9 @@ const routes: Routes= [
 
  {path: 'personas/evento/:id', component: EventoPersonaComponent},
 
- {path: 'personas/evento/form/:id', component: FormEventoPersonaComponent}
+ {path: 'personas/evento/form/:id', component: FormEventoPersonaComponent},
+
+ {path: 'reportes', component: ReportesComponent}
 ]
 
 @NgModule({
@@ -166,7 +170,8 @@ const routes: Routes= [
     FormGolComponent,
     FormularioGolComponent,
     EventoPersonaComponent,
-    FormEventoPersonaComponent
+    FormEventoPersonaComponent,
+    ReportesComponent
   ],
   imports: [
     BrowserModule,
@@ -178,7 +183,7 @@ const routes: Routes= [
   providers: [PersonaService, CategoriaService, EquipoService, JugadorService, 
     EventoService, FasesService, FechasService, GrupoService,
     DueloService, EquipoGrupoService, AsignarEquipoGrupoService,
-    ModalEstadisticaService, EventoPersonaServiceService, {provide: LOCALE_ID, useValue: 'es' },
+    ModalEstadisticaService, EventoPersonaServiceService, ReportesService, {provide: LOCALE_ID, useValue: 'es' },
     {provide: HTTP_INTERCEPTORS, useClass: Token, multi: true} ,
     {provide: HTTP_INTERCEPTORS, useClass: Auth, multi: true}  ],
   bootstrap: [AppComponent]

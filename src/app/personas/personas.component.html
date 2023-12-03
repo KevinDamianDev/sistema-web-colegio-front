@@ -64,6 +64,15 @@
         </tbody>
     
       </table>
+
+<!-- Overlay con Spinner y Mensaje 
+<div *ngIf="cargando" class="overlay">
+  <div class="loader"></div>
+  <p class="loading-text">Enviando credenciales...</p>
+</div>
+-->
+
+
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item" [class.disabled]="currentPage === 1">
