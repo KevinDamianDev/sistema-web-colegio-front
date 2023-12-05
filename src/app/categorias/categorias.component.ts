@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Categoria } from './categoria';
 import { CategoriaService } from './categoria.service';
 import Swal from 'sweetalert2';
-import { ReportesService } from '../reportes/reportes.service';
 
 @Component({
   selector: 'app-categorias',
@@ -20,7 +19,7 @@ export class CategoriasComponent {
   searchTerm: string = '';
 
 
-  constructor(private categoriaService: CategoriaService, private reportesService: ReportesService){}
+  constructor(private categoriaService: CategoriaService){}
 
   ngOnInit(): void {
     this.categoriaService.getCategorias().subscribe(
@@ -41,29 +40,6 @@ export class CategoriasComponent {
     });
   }*/
 
-  descargar(categoria: number, tipo: string) {
-    this.reportesService.descargarReporte(categoria, tipo).subscribe(data => {
-      const blob = new Blob([data], { type: tipo === 'PDF' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      const url = window.URL.createObjectURL(blob);
-  
-      // Crear un enlace y asignarle el URL del blob
-      const link = document.createElement('a');
-      link.href = url;
-  
-      // Asignar un nombre al archivo con la extensión correcta
-      const fecha = new Date().toISOString().slice(0, 10);
-      const extension = tipo === 'PDF' ? 'pdf' : 'xlsx'; // Usar 'xlsx' como extensión para Excel
-      link.download = `Reporte-${categoria}-${fecha}.${extension}`;
-  
-      // Simular un clic en el enlace para iniciar la descarga y luego eliminar el enlace
-      link.click();
-      window.URL.revokeObjectURL(url);
-      link.remove();
-    }, error => {
-      console.log('Error al descargar el archivo', error);
-    });
-  }
-  
   
 
   search(): void {

@@ -9,35 +9,7 @@
       </div>
     </div>
 
-<!--
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="my-2 text-left">
-                    <input type="checkbox" [(ngModel)]="checkboxSeleccionado" (change)="toggleBotones()"> Opciones
-                  </div>
-                    <div  class="card mb-3">
-                    <div class="card-body d-flex justify-content-center" >
-                      <h5 class="card-title"> </h5>
-                     Eventos por Categoria
-                    </div>      
-                    </div>
 
-                      <div class="form-group row" *ngIf="botonesHabilitados">
-                       
-                        <div class="col-sm-6">
-                            <select  class="form-control" name="categoria" [(ngModel)]="categoriaSeleccionada">
-                              <option [ngValue]="undefined">-- Seleccionar Categoria --</option>
-                              <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">{{categoria.nombreCategoria}}</option>
-                            </select>
-                            <button *ngIf="categoriaSeleccionada" class="btn btn-primary">EXCEL</button>
-                            <button *ngIf="categoriaSeleccionada" class="btn btn-primary">PDF</button>
-                        </div>
-                        </div>
-            </div>
-        </div>
-      </div>
-      -->
 
       <div class="container">
         <div class="row">
@@ -66,6 +38,68 @@
                     </div>
                     <div class="col-sm-2">
                         <button *ngIf="categoriaSeleccionada" class="btn btn-success" (click)="descargar(categoriaSeleccionada.idCategoria, 'EXCEL')">
+                            <i class="fas fa-file-excel"></i> EXCEL
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="my-2 text-left">
+                    <input type="checkbox" [(ngModel)]="checkboxSeleccionadoReporte2" (change)="toggleBotonesReporte2()"> Generar
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body d-flex justify-content-center">
+                        <h5 class="card-title"></h5>
+                       Equipos por Eventos
+                    </div>      
+                </div>
+    
+                <div class="form-group row" *ngIf="botonesHabilitadosReporte2">
+                    <div class="col-sm-7">
+                        <select class="form-control" name="evento" [(ngModel)]="eventoSeleccionado">
+                            <option [ngValue]="undefined">-- Seleccionar Evento --</option>
+                            <option *ngFor="let evento of eventos" [ngValue]="evento">{{evento.nombreEvento}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button *ngIf="eventoSeleccionado" class="btn btn-primary" (click)="descargarReporte1(eventoSeleccionado.idEvento, 'PDF')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button *ngIf="eventoSeleccionado" class="btn btn-success" (click)="descargarReporte1(eventoSeleccionado.idEvento, 'EXCEL')">
+                            <i class="fas fa-file-excel"></i> EXCEL
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="my-2 text-left">
+                    <input type="checkbox" [(ngModel)]="checkboxSeleccionadoReporte3" (change)="toggleBotonesReporte3()"> Generar
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body d-flex justify-content-center">
+                        <h5 class="card-title"></h5>
+                       Jugadores por Categoria
+                    </div>      
+                </div>
+    
+                <div class="form-group row" *ngIf="botonesHabilitadosReporte3">
+                    <div class="col-sm-7">
+                        <select class="form-control" name="categoria" [(ngModel)]="categoriaSeleccionada">
+                            <option [ngValue]="undefined">-- Seleccionar Categoria --</option>
+                            <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{categoria.nombreCategoria}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button *ngIf="categoriaSeleccionada" class="btn btn-primary" (click)="descargarReporte3(categoriaSeleccionada.idCategoria, 'PDF')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button *ngIf="categoriaSeleccionada" class="btn btn-success" (click)="descargarReporte3(categoriaSeleccionada.idCategoria, 'EXCEL')">
                             <i class="fas fa-file-excel"></i> EXCEL
                         </button>
                     </div>
