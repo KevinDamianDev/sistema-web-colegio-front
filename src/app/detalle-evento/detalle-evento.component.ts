@@ -23,7 +23,7 @@ export class DetalleEventoComponent {
   fases: Fase[];
   fechas: Fecha[];
   errores : string;
-  equipos: Equipo[];
+  equipos: Equipo[]=[];
   erroresEquipo : string;
 
   goles: Goles[];

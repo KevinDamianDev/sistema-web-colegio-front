@@ -76,7 +76,7 @@ export class PersonaService {
     return this.http.delete<Persona>(`${this.url}/${id}`)
     .pipe(
       catchError(e =>{
-       // Swal.fire('Error',e.error.mensaje, 'error');
+        Swal.fire('Error',e.error.mensaje, 'error');
         return throwError(e);
       } )
     )
