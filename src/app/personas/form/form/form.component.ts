@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Rol } from '../../rol';
 import { Mail } from '../../mail';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-form',
@@ -14,12 +15,12 @@ export class FormComponent {
   titulo: string = 'Registro de personas.'
   public persona: Persona = new Persona();
   cargando: boolean = false;
-  public correo: Mail = new Mail();
+  //public correo: Mail = new Mail();
 
   constructor(
     private personaService: PersonaService,
     private router: Router,
-    private activate: ActivatedRoute) { }
+    private activate: ActivatedRoute,  public auth: AuthService) { }
 
   ngOnInit(): void {
     this.cargarPersona();
@@ -36,6 +37,7 @@ export class FormComponent {
       nombrePersona: this.persona.nombrePersona,
       apellidosPersonas: this.persona.apellidosPersonas,
       dniPersona: this.persona.dniPersona,
+      telefonoPersona: this.persona.telefonoPersona,
       fechaNacPersona: this.persona.fechaNacPersona,
       correoPersona: this.persona.correoPersona,
       usuarioPersona: this.persona.usuarioPersona,
@@ -48,7 +50,7 @@ export class FormComponent {
     //console.log('this.personaParaEnviar::: --> ', JSON.stringify(personaParaEnviar, null, 2));
     this.personaService.create(personaParaEnviar).subscribe((json) => {
       this.router.navigate(['/personas']);
-      this.enviarEmail();
+      //this.enviarEmail();
       Swal.fire(
         'Nueva Persona',
         `La persona ${json.persona.nombrePersona} ${json.persona.apellidosPersonas} ha sido creada con éxito!`,
@@ -68,6 +70,7 @@ export class FormComponent {
       nombrePersona: this.persona.nombrePersona,
       apellidosPersonas: this.persona.apellidosPersonas,
       dniPersona: this.persona.dniPersona,
+      telefonoPersona: this.persona.telefonoPersona,
       fechaNacPersona: this.persona.fechaNacPersona,
       correoPersona: this.persona.correoPersona,
       usuarioPersona: this.persona.usuarioPersona,
@@ -121,7 +124,7 @@ export class FormComponent {
   }
 
 
-  enviarEmail(): void{
+/*  enviarEmail(): void{
     this.cargando = true; // Activar el spinner
 
     this.correo.email = this.persona.correoPersona;
@@ -138,7 +141,7 @@ export class FormComponent {
       );
      
 
-    });*/
+    });
 
     console.log('email' + this.correo.email )
     console.log('nombreUsuario' + this.correo.nombreUsuario )
@@ -168,5 +171,5 @@ export class FormComponent {
     );
     
 
-  }
+  }*/
 }

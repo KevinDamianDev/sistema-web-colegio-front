@@ -116,7 +116,6 @@ export class FormularioGolComponent {
     this.goles.duelo = this.duelo;
     this.dueloservice.createGol(this.goles).subscribe(
       json =>{
-        //this.router.navigate(['/eventos'])
         this.regresar();
         Swal.fire('Nuevo Marcador', `Registro ha sido creado con éxito! `, 'success')
       } 
@@ -128,7 +127,6 @@ export class FormularioGolComponent {
     this.dueloservice.updateGol(this.goles)
     .subscribe(p =>{
       this.regresar();
-     // this.router.navigate(['/eventos'])
       Swal.fire('Actualizado', `Registro ha sido actualizado con éxito! `, 'success')
 
     }

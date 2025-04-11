@@ -3,10 +3,8 @@ import { EquipoEstadistica } from '../equipo-estadistica';
 import { ModalEstadisticaService } from './modal-estadistica.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { GrupoService } from 'src/app/grupos/grupo.service';
-import { Grupo } from 'src/app/grupos/grupo';
-import { FasesService } from 'src/app/fases/fases.service';
-import { Fase } from 'src/app/fases/fase';
+//import { FasesService } from 'src/app/fases/cursos.service';
+//import { Fase } from 'src/app/fases/curso';
 import { Location } from '@angular/common';
 @Component({
   selector: 'app-detalle-estadistica',
@@ -17,21 +15,19 @@ export class DetalleEstadisticaComponent {
   equipoEstadistica: EquipoEstadistica[];
   mensajeError: string;
   estadistica: EquipoEstadistica;
-  grupo: Grupo;
   idGrupo: number;
   titulo: string = 'Actualización de estadisticas.'
-  fase: Fase;
+ // fase: Fase;
   idFase: number;
   ruta: string;
 
   constructor(private activate: ActivatedRoute,  private location: Location,private estadisticaService: ModalEstadisticaService,
-    private grupoService: GrupoService, private router: Router, private faseService: FasesService ){}
+     private router: Router){}
 
   ngOnInit(): void {
    // this.cargaEstadisticaByEquipo();
    this.cargarEstadistica();
-   this.cargarGrupo();
-   this.cargarFase();
+  // this.cargarFase();
   }
 
   cargarEstadistica():void{
@@ -66,22 +62,8 @@ export class DetalleEstadisticaComponent {
  )
  }
 
- cargarGrupo(): void{
-  this.activate.params.subscribe((params) => {
-    const idGrupo = params['idGrupo']; 
-    console.log('idGrupo:  '+ idGrupo)   
-    if(idGrupo){
-      this.grupoService.getGrupo(idGrupo).subscribe(
-        (g)=>{
-          this.grupo = g;
-          this.idGrupo = this.grupo.idGrupo;
-        }
-      )
-    }
 
-  })
-}
-
+/*
 cargarFase(): void{
   this.activate.params.subscribe((params) => {
     const idFase = params['idFase'];    
@@ -96,7 +78,7 @@ cargarFase(): void{
     }
 
   })
-}
+}*/
 
  /* cargaEstadisticaByEquipo(): void{
     this.route.params.subscribe((params) => {

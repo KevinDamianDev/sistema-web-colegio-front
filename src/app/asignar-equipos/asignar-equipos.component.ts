@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { Grupo } from '../grupos/grupo';
 import { Equipo } from '../equipos/equipo';
 import { EventoService } from '../evento/evento.service';
 import { ActivatedRoute } from '@angular/router';
-import { FasesService } from '../fases/fases.service';
+//import { FasesService } from '../fases/cursos.service';
 import { EquipoGrupo } from './equipo-grupo';
 import { AsignarEquipoGrupoService } from './asignar-equipo-grupo.service';
 import Swal from 'sweetalert2';
@@ -17,10 +16,8 @@ import { EquipoGrupoDuelo } from './equipo-grupo-duelo';
 })
 export class AsignarEquiposComponent {
 
-grupos: Grupo[];
 equipos: Equipo[];
 equipoSeleccionado: Equipo; 
-grupoSeleccionado: Grupo;
 
 equipoGrupo: EquipoGrupo;
 idFase: number;
@@ -49,7 +46,7 @@ duelosEquipos: { [duelo: string]: EquipoGrupoDuelo[] } = {}; // Objeto para agru
 //equipoGrupo:EquipoGrupo;
 
 constructor(private eventoService: EventoService, private activate: ActivatedRoute,
-  private faseService: FasesService, private equipoGrupoAsignar: AsignarEquipoGrupoService,
+   private equipoGrupoAsignar: AsignarEquipoGrupoService,
   private dueloService: DueloService){}
 
   ngOnInit(): void {
@@ -57,7 +54,6 @@ constructor(private eventoService: EventoService, private activate: ActivatedRou
     this.cargarEquiposGruposByFase();
     this.cargarEquipos();
     this.cargarDuelosByFase();
-    this.cargarGruposByFase();
 
     // -- VARIABLES EQUIPO GRUPO DUELO
     this.cargarEquiposGruposDueloByFase();
@@ -69,61 +65,11 @@ constructor(private eventoService: EventoService, private activate: ActivatedRou
   }
   
 
-  asignarEquipoAGrupo() {
-    if (this.equipoSeleccionado && this.grupoSeleccionado) {
-
-      this.equipoGrupo = new EquipoGrupo();
-      this.equipoGrupo.equipo = this.equipoSeleccionado;
-      this.equipoGrupo.grupo = this.grupoSeleccionado ;
-
-      this.equipoGrupoAsignar.asignarEquiposAGrupos(this.equipoGrupo).subscribe(
-        (response) => {
-          Swal.fire({
-            icon: 'success', 
-            title: 'Equipo asignado!', 
-            text: 'Se asignó el equipo al grupo seleccionado.', 
-            confirmButtonColor: '#28a745', 
-            confirmButtonText: 'Aceptar',  
-          }).then(() => {
-            // Recargar la página después de hacer clic en "Aceptar"
-            this.equipoSeleccionado = null;
-            this.grupoSeleccionado = null;
-            location.reload();
-          //this.cargarEquiposGruposByFase();
-          });
-         // this.equipoGrupoCreado = response.equipoGrupo;
-           //console.log('this.equipoGrupoCreado:::', JSON.stringify(this.equipoGrupoCreado, null, 2));
-          
-        },(error) => {
-          this.equipoSeleccionado = null;
-          this.grupoSeleccionado = null;
-        }
-
-      );
-      
-    } else {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Advertencia!',  
-        text: 'Debes seleccionar un equipo y un grupo antes de asignarlos..', 
-        confirmButtonColor: '#d33',  
-        confirmButtonText: 'Entendido',  
-      }).then(() => {
-        // Recargar la página después de hacer clic en "Aceptar"
-        this.equipoSeleccionado = null;
-        this.grupoSeleccionado = null;
-      });
-
-    }
-  }
-
    
   seleccionarEquipo(equipo: any) {
     this.equipoSeleccionado = equipo;
   }
-  seleccionarGrupo(grupo: any) {
-    this.grupoSeleccionado = grupo;
-  }
+
   
 
 
@@ -164,20 +110,6 @@ cargarDuelosByFase(): void{
 }
 
 
-cargarGruposByFase(): void{
-  this.activate.params.subscribe((params) => {
-    const idFase = params['idFase'];
-    this.idFase = idFase;
-
-    if (idFase) {
-      this.faseService.getGruposFase(idFase).subscribe(
-        grupos => {
-          this.grupos = grupos;
-        },
-      )}
-  });
-}
-
 
 
 
@@ -189,26 +121,12 @@ cargarEquiposGruposByFase(): void {
       (e) => {
         this.equiposGrupos = e;
          //console.log('this.equiposGrupos::: --> ', JSON.stringify(this.equiposGrupos, null, 2));
-         this.agruparEquiposPorGrupo();        
+        // this.agruparEquiposPorGrupo();        
       }
     );
   });
 }
 
-// AGRUPA EQUIPOS POR GRUPO
-private agruparEquiposPorGrupo() {
-  console.log('entra')
-  if (this.equiposGrupos) {
-    this.equiposGrupos.forEach((equipoGrupo: EquipoGrupo) => {
-      const grupoNombre = equipoGrupo.grupo.nombreGrupo;
-      if (!this.gruposEquipos[grupoNombre]) {
-        this.gruposEquipos[grupoNombre] = [];
-      }
-      this.gruposEquipos[grupoNombre].push(equipoGrupo);
-    });
-   // console.log('this.gruposEquipos:::', JSON.stringify(this.gruposEquipos, null, 2));
-  }
-}
 
 
 // ELIMNAR EQUIPOS DE GRUPOS
@@ -236,7 +154,6 @@ eliminarEquipoGrupo(idEquipoGrupo: number): void{
       //console.log(' this.equipoGrupo ELIMINAR::::'+JSON.stringify(this.equipoGrupo, null, 2));
       this.equipoGrupoAsignar.deleteEquipoByGrupo(idEquipoGrupo).subscribe(
         response => {
-          this.agruparEquiposPorGrupo();
           swalWithBootstrapButtons.fire(
             'Equipo Eliminado!',
             `Equipo eliminado del grupo..!`,
@@ -333,7 +250,7 @@ asignarEquipoGrupoADuelo() {
     }).then(() => {
       // Recargar la página después de hacer clic en "Aceptar"
       this.equipoSeleccionado = null;
-      this.grupoSeleccionado = null;
+      
     });
 
   }
@@ -363,7 +280,6 @@ eliminarEquipoGrupoDuelo(idEquipoGrupoDuelo: number): void{
       //console.log(' this.equipoGrupo ELIMINAR::::'+JSON.stringify(this.equipoGrupo, null, 2));
       this.equipoGrupoAsignar.deleteEquipoGrupoByDuelo(idEquipoGrupoDuelo).subscribe(
         response => {
-          this.agruparEquiposPorGrupo();
           swalWithBootstrapButtons.fire(
             'Equipo Eliminado!',
             `Equipo eliminado del duelo..!`,

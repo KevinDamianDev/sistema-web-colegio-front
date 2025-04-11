@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Categoria } from '../categorias/categoria';
-import { CategoriaService } from '../categorias/categoria.service';
+import { Docente } from '../docentes/docente';
+import { DocenteService } from '../docentes/docente.service';
 import { ReportesService } from './reportes.service';
 import { Evento } from '../evento/evento';
 import { EventoService } from '../evento/evento.service';
@@ -11,20 +11,20 @@ import { EventoService } from '../evento/evento.service';
 })
 export class ReportesComponent {
 
-  categorias: Categoria[];
-  categoriaSeleccionada: Categoria;
+/* // categorias: Categoria[];
+  //categoriaSeleccionada: Categoria;
 
   eventos: Evento[];
   eventoSeleccionado: Evento;
 
 
   constructor(
-    private categoriaService: CategoriaService,
+    //private categoriaService: CategoriaService,
     private reportesService: ReportesService,
     private eventoService: EventoService){}
 
     ngOnInit(): void {     
-      this.categoriaService.getCategorias().subscribe(ca=>this.categorias=ca);
+     // this.categoriaService.getCategorias().subscribe(ca=>this.categorias=ca);
       this.eventoService.getEventos().subscribe(ev=>this.eventos=ev);
     }
 
@@ -118,5 +118,5 @@ export class ReportesComponent {
         }, error => {
           console.log('Error al descargar el archivo', error);
         });
-      }
+      }*/
 }

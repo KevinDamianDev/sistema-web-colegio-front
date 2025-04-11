@@ -6,6 +6,7 @@ export class Persona {
     apellidosPersonas: string;
     correoPersona:string;
     dniPersona: number; 
+    telefonoPersona: number; 
     fechaNacPersona: string;
     estadoPersona: boolean;
     usuarioPersona: string;

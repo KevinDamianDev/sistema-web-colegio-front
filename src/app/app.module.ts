@@ -14,9 +14,9 @@ import { FormComponent } from './personas/form/form/form.component';
 import { FormsModule } from '@angular/forms';
 import localeEs from  '@angular/common/locales/es-PE';
 import { registerLocaleData } from '@angular/common';
-import { CategoriasComponent } from './categorias/categorias.component';
-import { CategoriaService } from './categorias/categoria.service';
-import { CategoriaFormComponent } from './categorias/form/categoria-form/categoria-form.component';
+import { DocenteComponent } from './docentes/docente.component';
+import { DocenteService } from './docentes/docente.service';
+import { DocenteFormComponent } from './docentes/form/docente-form/docente-form.component';
 import { EquiposComponent } from './equipos/equipos.component';
 import { EquipoFormComponent } from './equipos/form/equipo-form/equipo-form.component';
 import { EquipoService } from './equipos/equipo.service';
@@ -28,15 +28,9 @@ import { JugadorService } from './jugadores/jugador.service';
 import { EventoComponent } from './evento/evento.component';
 import { EventoFormComponent } from './evento/form/evento-form/evento-form.component';
 import { EventoService } from './evento/evento.service';
-import { FasesComponent } from './fases/fases.component';
-import { FasesService } from './fases/fases.service';
-import { FaseFormComponent } from './fases/form/fase-form/fase-form.component';
-import { FechasComponent } from './fechas/fechas.component';
-import { FechaFormComponent } from './fechas/form/fecha-form/fecha-form.component';
-import { FechasService } from './fechas/fechas.service';
-import { GruposComponent } from './grupos/grupos.component';
-import { FormGrupoComponent } from './grupos/form/form-grupo/form-grupo.component';
-import { GrupoService } from './grupos/grupo.service';
+import { CursosComponent } from './fases/cursos.component';
+import { CursoFormComponent } from './fases/form/curso-form/curso-form.component';
+import { GradoService } from './grupos/grado.service';
 import { DuelosComponent } from './duelos/duelos.component';
 import { FormDueloComponent } from './duelos/form/form-duelo/form-duelo.component';
 import { DueloService } from './duelos/duelo.service';
@@ -62,18 +56,58 @@ import { EventoPersonaServiceService } from './evento-persona/evento-persona-ser
 import { FormEventoPersonaComponent } from './evento-persona/form/form-evento-persona/form-evento-persona.component';
 import { ReportesService } from './reportes/reportes.service';
 import { ReportesComponent } from './reportes/reportes.component';
+import { AlumnosComponent } from './alumnos/alumnos.component';
+import { AlumnoService } from './alumnos/alumno.service';
+import { FormGradoComponent } from './grupos/form/form-grado/form-grado.component';
+import { GradoComponent } from './grupos/grado.component';
+import { PeriodosComponent } from './periodos/periodos.component';
+import { FormPeriodoComponent } from './periodos/form-periodo/form-periodo.component';
+import { PeriodoService } from './periodos/periodo.service';
+import { ComunicadosComponent } from './comunicados/comunicados.component';
+import { ComunicadoService } from './comunicados/comunicado.service';
+import { ComunidadoFormComponent } from './comunicados/comunidado-form/comunidado-form.component';
+import { GradosDocentesComponent } from './grados-docentes/grados-docentes.component';
+import { CursosGradosComponent } from './cursos-grados/cursos-grados.component';
+import { EvaluacionesCursosComponent } from './evaluaciones-cursos/evaluaciones-cursos.component';
+import { EvaluacionServiceService } from './evaluaciones-cursos/evaluacion-service.service';
 
   registerLocaleData(localeEs, 'es');
 const routes: Routes= [
-  {path: '', redirectTo:'/eventos', pathMatch: 'full'},
+  {path: '', redirectTo:'/login', pathMatch: 'full'},
   {path: 'personas', component: PersonasComponent},
   {path: 'personas/form', component: FormComponent},
   {path: 'personas/form/:id', component: FormComponent},
 
-  {path: 'categorias', component: CategoriasComponent},
-  {path: 'categorias/form', component: CategoriaFormComponent},
-  {path: 'categorias/form/:id', component: CategoriaFormComponent},
+  {path: 'docentes', component: DocenteComponent},
+  {path: 'docentes/form', component: DocenteFormComponent},
+  {path: 'docentes/form/:id', component: DocenteFormComponent},
 
+  {path: 'alumnos', component: AlumnosComponent},
+
+  {path: 'grados', component: GradoComponent},
+  {path: 'grados/form', component: FormGradoComponent},
+  {path: 'grados/form/:id', component: FormGradoComponent},
+
+  {path: 'cursos', component: CursosComponent},
+  {path: 'cursos/form', component: CursoFormComponent},
+  {path: 'cursos/form/:id', component: CursoFormComponent},
+
+  {path: 'periodos', component: PeriodosComponent},
+  {path: 'periodos/form', component: FormPeriodoComponent},
+  {path: 'periodos/form/:id', component: FormPeriodoComponent},
+
+  {path: 'comunicados', component: ComunicadosComponent},
+  {path: 'comunicados/form', component: ComunidadoFormComponent},
+  {path: 'comunicados/form/:id', component: ComunidadoFormComponent},
+
+  {path: 'docentegrados', component: GradosDocentesComponent},
+
+  {path: 'cursosgrados', component: CursosGradosComponent},
+
+  {path: 'evaluacioncurso', component: EvaluacionesCursosComponent},
+
+  
+ 
   //{path: 'equipos', component: EquiposComponent},
   {path: 'equipos/form', component: EquipoFormComponent},
   {path: 'equipos/form/:id', component: EquipoFormComponent},
@@ -87,17 +121,15 @@ const routes: Routes= [
  {path: 'eventos/form', component: EventoFormComponent},
  {path: 'eventos/form/:id', component: EventoFormComponent},
 
- //{path: 'fases', component: FasesComponent},
- {path: 'fases/form', component: FaseFormComponent},
- {path: 'fases/form/:id', component: FaseFormComponent},
+  //{path: 'fases', component: FasesComponent},
+ //{path: 'fases/form', component: FaseFormComponent},
+ //{path: 'fases/form/:id', component: FaseFormComponent},
 
  //{path: 'fechas', component: FechasComponent},
- {path: 'fechas/form', component: FechaFormComponent},
- {path: 'fechas/form/:id', component: FechaFormComponent},
+ //{path: 'fechas/form', component: FechaFormComponent},
+ //{path: 'fechas/form/:id', component: FechaFormComponent},
 
- //{path: 'grupos', component: GruposComponent},
- {path: 'grupos/form', component: FormGrupoComponent},
- {path: 'grupos/form/:id', component: FormGrupoComponent},
+ 
 
  //{path: 'duelos', component: DuelosComponent},
  {path: 'duelos/form', component: FormDueloComponent},
@@ -140,8 +172,8 @@ const routes: Routes= [
     BreadComponent,
     PersonasComponent,
     FormComponent,
-    CategoriasComponent,
-    CategoriaFormComponent,
+    DocenteComponent,
+    DocenteFormComponent,
     EquiposComponent,
     EquipoFormComponent,
     DetalleComponent,
@@ -150,12 +182,10 @@ const routes: Routes= [
     DetalleJugadorComponent,
     EventoComponent,
     EventoFormComponent,
-    FasesComponent,
-    FaseFormComponent,
-    FechasComponent,
-    FechaFormComponent,
-    GruposComponent,
-    FormGrupoComponent,
+    CursosComponent,
+    CursoFormComponent,
+    GradoComponent,
+    FormGradoComponent,
     DuelosComponent,
     FormDueloComponent,
     EquipoGrupoComponent,
@@ -171,8 +201,16 @@ const routes: Routes= [
     FormularioGolComponent,
     EventoPersonaComponent,
     FormEventoPersonaComponent,
-    ReportesComponent
-  ],
+    ReportesComponent,
+    AlumnosComponent,
+    PeriodosComponent,
+    FormPeriodoComponent,
+    ComunicadosComponent,
+    ComunidadoFormComponent,
+    GradosDocentesComponent,
+    CursosGradosComponent,
+    EvaluacionesCursosComponent
+     ],
   imports: [
     BrowserModule,
     NgPipesModule,
@@ -180,9 +218,11 @@ const routes: Routes= [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [PersonaService, CategoriaService, EquipoService, JugadorService, 
-    EventoService, FasesService, FechasService, GrupoService,
-    DueloService, EquipoGrupoService, AsignarEquipoGrupoService,
+  providers: [PersonaService, DocenteService, AlumnoService, GradoService, EvaluacionServiceService,
+    PeriodoService, ComunicadoService, 
+    EquipoService, JugadorService, 
+    EventoService, 
+    DueloService, EquipoGrupoService, AsignarEquipoGrupoService, 
     ModalEstadisticaService, EventoPersonaServiceService, ReportesService, {provide: LOCALE_ID, useValue: 'es' },
     {provide: HTTP_INTERCEPTORS, useClass: Token, multi: true} ,
     {provide: HTTP_INTERCEPTORS, useClass: Auth, multi: true}  ],

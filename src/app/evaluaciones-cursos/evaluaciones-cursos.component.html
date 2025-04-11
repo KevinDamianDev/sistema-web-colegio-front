@@ -1,0 +1,27 @@
+<br>
+<div class="container-fluid">
+    <div class="card border-primary mb-3" style="max-width: 80%; margin: auto;">
+        <div class="card-header text-center font-weight-bold">EVALUACIONES</div>
+        <div class="card-body">
+
+
+            <div *ngIf="evaluaciones?.length == 0" class="alert alert-info text-center">
+                No tiene evaluaciones este curso!
+            </div>
+
+            <div class="row" *ngIf="evaluaciones?.length > 0">
+                <div class="col-md-3 mb-3" *ngFor="let eva of evaluaciones">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title d-block text-center font-weight-bold">{{eva.nombreEvaluacion}}</h5>
+
+                            <p class="card-text text-truncate"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

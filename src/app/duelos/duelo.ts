@@ -1,4 +1,3 @@
-import { Fecha } from "../fechas/fecha";
 
 export class Duelo {
     idDuelo: number;
@@ -6,5 +5,5 @@ export class Duelo {
     fechaDuelo: string;
     lugarDuelo: string;
     estado: string;
-    fecha: Fecha;
+   // fecha: Fecha;
 }

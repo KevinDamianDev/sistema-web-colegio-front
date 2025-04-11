@@ -3,8 +3,8 @@ import { Evento } from '../../evento';
 import { EventoService } from '../../evento.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { CategoriaService } from 'src/app/categorias/categoria.service';
-import { Categoria } from 'src/app/categorias/categoria';
+import { DocenteService } from 'src/app/docentes/docente.service';
+import { Docente } from 'src/app/docentes/docente';
 
 @Component({
   selector: 'app-evento-form',
@@ -14,17 +14,18 @@ export class EventoFormComponent {
 
   titulo: string = 'Registro de eventos.'
   public evento: Evento = new Evento();
-  categorias: Categoria[];
+  //categorias: Categoria[];
 
   constructor(private eventoService: EventoService,
     private router: Router,
-    private activate: ActivatedRoute,
-    private categoriaService: CategoriaService){}
+    private activate: ActivatedRoute//,
+   // private categoriaService: CategoriaService
+  ){}
 
     ngOnInit(): void {
       this.cargarEvento();
       
-      this.categoriaService.getCategorias().subscribe(ca=>this.categorias=ca);
+      //this.categoriaService.getCategorias().subscribe(ca=>this.categorias=ca);
 
     }
 
@@ -58,13 +59,13 @@ export class EventoFormComponent {
    ) }
 
 
-   compararCategoria(o1:Categoria, o2: Categoria){
+  /*--Seleccionar compararCategoria(o1:Categoria, o2: Categoria){
     //return o1 ===null || o2===null?false: o1.idCategoria===o2.idCategoria;
     if(o1===undefined && o2===undefined){
       return true;
     
     }
       return o1==null || o2==null?false: o1.idCategoria===o2.idCategoria;
-  }
+  }*/
 
 }

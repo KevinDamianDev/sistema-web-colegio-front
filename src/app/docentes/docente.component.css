@@ -1,0 +1,14 @@
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.list-group-item {
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.list-group-item:hover {
+  background: #007bff;
+  color: white;
+}

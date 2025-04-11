@@ -1,8 +1,6 @@
 <br>
 <div class="container" 
-*ngIf="(auth.hasRole('ROLE_ADMIN') && auth.hasRole('ROLE_USER')) ||
-(auth.hasRole('ROLE_ADMIN') || !auth.hasRole('ROLE_USER')) ||  
-(!auth.hasRole('ROLE_ADMIN') && !auth.hasRole('ROLE_USER'))" >
+ >
 <div class="card  border-primary  mb-3">
   <div class="card-header">EVENTOS</div>
   <div class="card-body" >

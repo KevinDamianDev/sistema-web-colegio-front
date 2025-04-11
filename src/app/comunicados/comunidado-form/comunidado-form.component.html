@@ -1,0 +1,75 @@
+<br>
+<div class="container" *ngIf="auth.hasRole('ROLE_ADMIN')">
+  <div class="card bg-secondary text-white" style="max-width: 100%; margin: auto; padding: 20px;">
+    <div class="card-header text-center font-weight-bold">{{ titulo2 }}</div>
+    <div class="card-body">
+
+      <form #form="ngForm">
+
+        <div class="form-group row">
+          <label for="titulo" class="col-form-label col-sm-3">Nombres:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" [(ngModel)]="comunicado.titulo" name="titulo" required minlength="4" #titulo="ngModel">
+            <div class="alert alert-danger mt-2" *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)">
+              <div *ngIf="nombre.errors.required">El título es requerido.</div>
+              <div *ngIf="nombre.errors.minlength">El título debe tener al menos 4 caracteres.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="descripcion" class="col-form-label col-sm-3">Descripción:</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" [(ngModel)]="comunicado.descripcion" name="descripcion" required #descripcion="ngModel" 
+                        rows="8" style="resize: none; height: 200px;"></textarea>
+              <div class="alert alert-danger mt-2" *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
+                <div *ngIf="descripcion.errors?.required">La descripción es requerida.</div>
+              </div>
+            </div>
+          </div>
+          
+          
+
+
+   
+        <div class="form-group row">
+          <label for="fechaPublicacion" class="col-form-label col-sm-3">Fecha:</label>
+          <div class="col-sm-8">
+            <input type="date" class="form-control" [(ngModel)]="comunicado.fechaPublicacion" name="fechaPublicacion" required #fecha="ngModel">
+            <div class="alert alert-danger mt-2" *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
+              <div *ngIf="fecha.errors.required">Fecha es requerida.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="estadoComunicado" class="col-form-label col-sm-3">Estado:</label>
+          <div class="col-sm-8">
+            <select class="form-control" [(ngModel)]="comunicado.estadoComunicado" name="estadoComunicado" required #estado="ngModel">
+              <option [ngValue]="true">Activo</option>
+              <option [ngValue]="false">Inactivo</option>
+            </select>
+            <div class="alert alert-danger mt-2" *ngIf="estado.invalid && (estado.dirty || estado.touched)">
+              <div *ngIf="estado.errors.required">Estado es requerido.</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group row text-center">
+          <div class="col-sm-12">
+            <button role="button" [disabled]="!form.form.valid" class="btn btn-primary mr-3" name="button" (click)="create()"
+              *ngIf="!comunicado.idComunicado else elseBlock">Crear</button>
+            <ng-template #elseBlock>
+              <button role="button" [disabled]="!form.form.valid" class="btn btn-primary mr-3" name="button"
+                (click)="update()">Actualizar</button>
+            </ng-template>
+            <button role="button" [routerLink]="['/comunicados']" class="btn btn-danger" name="button">Cancelar</button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

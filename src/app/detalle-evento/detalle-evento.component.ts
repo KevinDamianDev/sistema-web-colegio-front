@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Evento } from '../evento/evento';
-import { Fase } from '../fases/fase';
+//import { Fase } from '../fases/curso';
 import { EventoService } from '../evento/evento.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FasesService } from '../fases/fases.service';
-import { Fecha } from '../fechas/fecha';
+//import { FasesService } from '../fases/cursos.service';
+//import { Fecha } from '../fechas/fecha';
 import { Location } from '@angular/common';
 import { Equipo } from '../equipos/equipo';
 import { ModalService } from '../equipos/detalle/modal.service';
@@ -19,8 +19,8 @@ import { Goles } from '../duelo-fecha/detalle/goles';
 })
 export class DetalleEventoComponent {
 
-  public evento: Evento = new Evento();
-  fases: Fase[];
+ /* public evento: Evento = new Evento();
+  //f//ases: Fase[];
   fechas: Fecha[];
   errores : string;
   equipos: Equipo[]=[];
@@ -41,7 +41,7 @@ export class DetalleEventoComponent {
     private location: Location, 
     private modalService: ModalService,
     private equipoService: EquipoService, 
-    private faseService: FasesService,
+   // private faseService: FasesService,
     public auth: AuthService){}
 
 
@@ -58,7 +58,7 @@ export class DetalleEventoComponent {
     equiposConGoles: any[] = [];
 
   ngOnInit(): void {
-    this.cargarEvento();
+    //this.cargarEvento();
     this.cargarGolesByEvento();
 
     this.modalService.notifica.subscribe(e =>{
@@ -72,7 +72,7 @@ export class DetalleEventoComponent {
 
   }
 
-  
+  /*
   cargarEvento(): void {
     this.activate.params.subscribe((params) => {
       const id = params['id'];
@@ -103,8 +103,8 @@ export class DetalleEventoComponent {
       }
     });
   }
-
-  toggleBotones() {
+*/
+ /* toggleBotones() {
     this.botonesHabilitados = !this.botonesHabilitados;
   }
   toggleBotonesEquipo() {
@@ -161,7 +161,7 @@ abrirModal(equipo: Equipo){
   this.modalService.abrirModal();
 }
 
-delete(fase: Fase): void{
+/*delete(fase: Fase): void{
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',
@@ -193,9 +193,9 @@ delete(fase: Fase): void{
 
     }
   });
-}
+}*/
 
-
+/*
 cargarGolesByEvento(): void {
   this.activate.params.subscribe((params) => {
     const id = params['id'];

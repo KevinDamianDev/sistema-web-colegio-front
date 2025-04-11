@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Persona } from './persona';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,9 @@ public get token(): string{
 
 
   login(usuario: Persona):Observable<any>{
-    const urlEndpoint = 'http://localhost:8080/oauth/token';
+    //const urlEndpoint = 'http://localhost:8080/oauth/token';
+    const urlEndpoint = `${environment.apiUrl}/oauth/token`;
+
     const credenciales = btoa('angularapp' +':'+'12345');
     const httpHeaders = new HttpHeaders({
       'Content-Type':'application/x-www-form-urlencoded',

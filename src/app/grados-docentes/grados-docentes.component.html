@@ -1,0 +1,35 @@
+<br>
+<div class="container-fluid">
+    <div class="card border-primary mb-3" style="max-width: 80%; margin: auto;">
+        <div class="card-header text-center font-weight-bold">GRADOS DEL DOCENTE</div>
+        <div class="card-body">
+
+
+            <div *ngIf="grados?.length == 0" class="alert alert-info text-center">
+                No hay grados para este docente!
+            </div>
+
+            <div class="row" *ngIf="grados?.length > 0">
+                <div class="col-md-3 mb-3" *ngFor="let grado of grados">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title d-block text-center font-weight-bold">{{grado.nombreGrado}} -
+                                {{grado.nombreSeccion}}</h5>
+
+                            <p class="card-text text-truncate"></p>
+
+                            <div class="mt-2 d-flex justify-content-between">
+                                <button type="button" class="btn btn-sm btn-info" (click)="seleccionarGrado(grado)">
+                                    Detalle
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { FechasService } from '../fechas/fechas.service';
+//import { FechasService } from '../fechas/fechas.service';
 import { ActivatedRoute } from '@angular/router';
-import { FasesService } from '../fases/fases.service';
+//import { FasesService } from '../fases/cursos.service';
 import { Duelo } from '../duelos/duelo';
-import { Fase } from '../fases/fase';
-import { Fecha } from '../fechas/fecha';
+//import { Fase } from '../fases/curso';
+//import { Fecha } from '../fechas/fecha';
 import { DueloService } from '../duelos/duelo.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../personas/auth.service';
@@ -17,10 +17,10 @@ import { ModalJugadorServiceService } from '../jugadores/detalle/detalle-jugador
 })
 export class DueloFechaComponent {
 
-  duelos: Duelo[];
+ /* duelos: Duelo[];
   idFecha: number;
   nombreFecha: string;
-  fase: Fase;
+ // fase: Fase;
   idFase: number;
   fecha: Fecha;
   errorDuelos: string;
@@ -31,7 +31,7 @@ export class DueloFechaComponent {
   dueloSeleccionado: Duelo;
 
   constructor( 
-    private faseService: FasesService, 
+    //private faseService: FasesService, 
     private route: ActivatedRoute,
     private dueloService: DueloService,
     private fechaService: FechasService,
@@ -41,7 +41,7 @@ export class DueloFechaComponent {
 
   ngOnInit(): void {
     this.modal();
-    this.cargarFechasByFase();
+    //this.cargarFechasByFase();
   }
 
   abrirModal(duelo: Duelo){
@@ -51,11 +51,11 @@ export class DueloFechaComponent {
 
   modal(): void{
     this.modalService.notifica.subscribe(e =>{
-     this.cargarFechasByFase();
+     //this.cargarFechasByFase();
     })
   }
 
-
+/*
 
   cargarFechasByFase(): void {
     this.route.params.subscribe((params) => {
@@ -92,9 +92,9 @@ export class DueloFechaComponent {
         )
       }
     });
-  }
+  }*/
 
-  toggleBotones() {
+ /* toggleBotones() {
     this.botonesHabilitados = !this.botonesHabilitados;
   }
 
@@ -132,5 +132,5 @@ export class DueloFechaComponent {
   
       }
     });
-  }
+  }*/
 }

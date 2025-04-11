@@ -1,33 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map, catchError, throwError } from 'rxjs';
 import { Persona } from './persona';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
 import { Rol } from './rol';
+import { environment } from 'src/environments/environment.prod';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonaService {
-  private url : string ='http://localhost:8080/personas';
+  //private url : string ='http://localhost:8080/ie/personac';
+  private url: string = `${environment.apiUrl}/ie/personac`;
 
-  private urlRol : string ='http://localhost:8080/roles';
-  //private httpHeaders= new HttpHeaders({'Content-Type': 'application/json'})
-  private urlEnvioEmail : string ='http://localhost:8080/mail/';
+  //private urlRol : string ='http://localhost:8080/ie/rol';
+  private urlRol: string = `${environment.apiUrl}/ie/rol`;
+ 
 
   constructor( private http: HttpClient, 
     private router: Router) { }
 
 
-   /* private agregarAutorizationHeader(){
-      let token= this.auth.token;
-      if(token!=null){
-        return this.httpHeaders.append('Authorization', 'Bearer '+ token);
-      }
-      return this.httpHeaders;
-    }*/
 
   getPersonas(): Observable<Persona[]> {
     return this.http.get<Persona[]>(this.url + '/')
@@ -110,7 +105,7 @@ getRoles(): Observable<Rol[]> {
   return this.http.get<Rol[]>(this.urlRol + '/')
 }
 
-enviarEmailCredenciales(mail: any) : Observable<any>{
+/*enviarEmailCredenciales(mail: any) : Observable<any>{
   
   return this.http.post<any>(this.urlEnvioEmail, mail);
  /* .pipe(
@@ -118,7 +113,16 @@ enviarEmailCredenciales(mail: any) : Observable<any>{
       Swal.fire('Error', e.error.error, 'error')
       return throwError(e);
     } )
-  )*/
-}
+  )
+}*/
+
+        getAlumnosPersonaPeriodoGrado(idPersona: number, idGrado: number, idPeriodo: number): Observable<Persona[]> {
+          const params = new HttpParams()
+            .set('idPersona', idPersona.toString())
+            .set('idGrado', idGrado.toString())
+            .set('idPeriodo', idPeriodo.toString());
+        
+          return this.http.get<Persona[]>(this.url + '/alumnosgrado', { params });
+        }
 
 }

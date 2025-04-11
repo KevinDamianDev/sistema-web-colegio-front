@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { Duelo } from '../../duelo';
-import { Fecha } from 'src/app/fechas/fecha';
 import { DueloService } from '../../duelo.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FechasService } from 'src/app/fechas/fechas.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 
@@ -13,7 +11,7 @@ import { Location } from '@angular/common';
 })
 export class FormDueloComponent {
   
-  titulo: string = 'Registro de duelos.'
+ /* titulo: string = 'Registro de duelos.'
   public duelo: Duelo = new Duelo();
   //fechas: Fecha[];
   fecha: Fecha;

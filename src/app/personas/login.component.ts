@@ -20,10 +20,9 @@ export class LoginComponent {
     if (this.auth.isAuthenticated()) {
 
       Swal.fire('Login', `Hola ${this.auth.usuario.nombrePersona}, ya estas autenticado..!`, 'info');
-      this.router.navigate(['/eventos'])
+      this.router.navigate(['/comunicados'])
     }
   }
-
 
 
   login(): void {
@@ -44,21 +43,21 @@ export class LoginComponent {
    
       if (this.auth.hasRole('ROLE_USER') && this.auth.hasRole('ROLE_ADMIN') ) {
         console.log('role admin -- user')
-        this.router.navigate(['/eventos'])
+        this.router.navigate(['/comunicados'])
         Swal.fire('Login', `Hola ${this.auth.usuario.nombrePersona}, has iniciado sesion con éxito..!`, 'success');
         
       }
 
       if (this.auth.hasRole('ROLE_ADMIN') && !this.auth.hasRole('ROLE_USER')) {
         console.log('role solo admin')
-        this.router.navigate(['/eventos'])
+        this.router.navigate(['/comunicados'])
         Swal.fire('Login', `Hola ${this.auth.usuario.nombrePersona}, has iniciado sesion con éxito..!`, 'success');
         
       }
        
       if (!this.auth.hasRole('ROLE_ADMIN') && this.auth.hasRole('ROLE_USER')) {
         console.log('role solo user')
-        this.router.navigate(['/misEventos'])
+        this.router.navigate(['/comunicados'])
         Swal.fire('Login', `Hola ${this.auth.usuario.nombrePersona}, has iniciado sesion con éxito..!`, 'success');
         
       }

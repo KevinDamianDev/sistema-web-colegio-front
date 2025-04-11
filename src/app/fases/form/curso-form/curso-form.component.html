@@ -1,0 +1,37 @@
+<br>
+<div class="container" *ngIf="auth.hasRole('ROLE_ADMIN')">
+  <div class="card bg-secondary text-white" style="max-width: 100%; margin: auto; padding: 20px;">
+    <div class="card-header text-center font-weight-bold">{{titulo}}</div>
+    <div class="card-body">
+
+      <form #form="ngForm">
+
+        <div class="form-group row">
+          <label for="nombreCurso" class="col-form-label col-sm-3">Curso:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" [(ngModel)]="curso.nombreCurso" name="nombreCurso" required minlength="4" #nombre="ngModel">
+            <div class="alert alert-danger mt-2" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+              <div *ngIf="nombre.errors.required">Curso es requerido.</div>
+              <div *ngIf="nombre.errors.minlength">El curso debe tener al menos 4 caracteres.</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group row text-center">
+          <div class="col-sm-12">
+            <button role="button" [disabled]="!form.form.valid" class="btn btn-primary mr-3" name="button" (click)="create()"
+              *ngIf="!curso.idCurso else elseBlock">Crear</button>
+            <ng-template #elseBlock>
+              <button role="button" [disabled]="!form.form.valid" class="btn btn-primary mr-3" name="button"
+                (click)="update()">Actualizar</button>
+            </ng-template>
+            <button role="button" [routerLink]="['/cursos']" class="btn btn-danger" name="button">Cancelar</button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

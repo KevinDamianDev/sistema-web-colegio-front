@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { EquipoGrupoService } from './equipo-grupo.service';
-import { FasesService } from '../fases/fases.service';
+//import { FasesService } from '../fases/cursos.service';
 import { ActivatedRoute } from '@angular/router';
-import { Fase } from '../fases/fase';
+//import { Fase } from '../fases/curso';
 import { EquipoGrupo } from '../asignar-equipos/equipo-grupo';
-import { GrupoService } from '../grupos/grupo.service';
-import { Grupo } from '../grupos/grupo';
 import { ModalEstadisticaService } from './estadisticas/detalle-estadistica/modal-estadistica.service';
 import { forkJoin } from 'rxjs';
 import { EquipoEstadistica } from './estadisticas/equipo-estadistica';
@@ -18,11 +16,11 @@ import { AuthService } from '../personas/auth.service';
 export class EquipoGrupoComponent {
 
   idFase: number;
-  fase: Fase;
+ // fase: Fase;
 
   mensajeEquipoGrupo: string;
 
-  grupo: Grupo;
+  //grupo: Grupo;
   nombreGrupo: string;
 
   equiposGrupos: EquipoGrupo[] = [];
@@ -34,16 +32,15 @@ export class EquipoGrupoComponent {
 
   constructor(
     private equipoGrupoService: EquipoGrupoService, 
-    private faseService: FasesService,
+   // private faseService: FasesService,
     private route: ActivatedRoute, 
-    private grupoService: GrupoService,
+   // private grupoService: GrupoService,
     private estadisticaService: ModalEstadisticaService,
     public auth: AuthService){}
 
   ngOnInit(): void {
 
-    this.cargarFase();
-    this.cargarGrupo();
+    //this.cargarFase();
     this.cargarEquipoGrupoYEstadisticas();
   }
 
@@ -108,7 +105,7 @@ export class EquipoGrupoComponent {
   
 
 
-  cargarFase(): void{
+ /* cargarFase(): void{
     this.route.params.subscribe((params) => {
       const idFase = params['idFase'];    
       console.log('idFase:  '+ idFase)
@@ -122,22 +119,7 @@ export class EquipoGrupoComponent {
       }
 
     })
-  }
+  }*/
 
-  cargarGrupo(): void{
-    this.route.params.subscribe((params) => {
-      const idGrupo = params['idGrupo']; 
-      console.log('idGrupo:  '+ idGrupo)   
-      if(idGrupo){
-        this.grupoService.getGrupo(idGrupo).subscribe(
-          (g)=>{
-            this.grupo = g;
-            this.nombreGrupo = this.grupo.nombreGrupo;
-          }
-        )
-      }
-
-    })
-  }
 
 }

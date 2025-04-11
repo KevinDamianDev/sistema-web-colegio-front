@@ -28,7 +28,7 @@ export class Auth {
            }
            if ( e.status==403){
              Swal.fire('Acceso denegado.', `Hola ${this.authService.usuario.nombrePersona} no tienes acceso`, 'warning');
-             this.router.navigate(['/eventos']);
+             this.router.navigate(['/comunicados']);
            }
            return throwError(e);                   
       })
