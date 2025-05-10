@@ -17,7 +17,7 @@ export class DocenteComponent implements OnInit {
   periodos: Periodo[] = [];
   paginatedPersonas: Persona[] = [];
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 15;
   ceil = Math.ceil;
   searchTerm: string = '';
   selectedDocenteId: number | null = null;

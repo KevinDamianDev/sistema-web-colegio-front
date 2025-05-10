@@ -17,7 +17,7 @@ export class PersonasComponent implements OnInit{
 
   paginatedPersonas: Persona[] = [];
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 15;
   ceil = Math.ceil;
   searchTerm: string = '';
   public correo: Mail = new Mail();

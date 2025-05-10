@@ -12,7 +12,7 @@ export class AlumnosComponent {
   
     paginatedPersonas: Persona[] = [];
     currentPage = 1;
-    itemsPerPage = 5;
+    itemsPerPage = 15;
     ceil = Math.ceil;
     searchTerm: string = '';
   
